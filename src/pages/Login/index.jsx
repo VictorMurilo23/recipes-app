@@ -1,19 +1,14 @@
 import React, { useContext, useState } from 'react';
+import PropTypes from 'prop-types';
 import context from '../../Context/loginContext';
 
-export default function Login() {
+export default function Login({ history }) {
   const {
     loginInfo: { login, password },
     setLoginInfo,
   } = useContext(context);
 
   const [disabled, setDisabled] = useState(true);
-
-  // const validateEmail = () => {
-  //   return String(login)
-  //     .toLowerCase()
-  //     .match(/^\S+@\S+\.\S+$/);
-  // };
 
   const regexValidate = /^\S+@\S+\.\S+$/;
   const onValidate = regexValidate.test(login);
@@ -37,6 +32,7 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify({ email: login }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('cocktailsToken', 1);
+    history.push('/foods');
   };
 
   return (
@@ -68,3 +64,9 @@ export default function Login() {
     </div>
   );
 }
+
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
