@@ -17,6 +17,11 @@ describe('Testes do Header', () => {
       name: /imagem perfil/i
     })
 
+    const btnSearch = screen.getByRole('button', {
+      name: /ícone de pesquisa/i
+    })
+    
+    userEvent.click(btnSearch)
     userEvent.click(btnProfile)
   })
 })
