@@ -15,12 +15,12 @@ export default function Routes() {
   return (
     <Switch>
       <Route exact path="/" component={ Login } />
-      <Route path="/foods" component={ Foods } />
-      <Route path="/foods/:id" component={ FoodsRecipes } />
-      <Route path="/foods/:id/in-progress" component={ FoodsInProgress } />
-      <Route path="/drinks" component={ Drinks } />
-      <Route path="/drinks/:id/" component={ DrinksRecipes } />
-      <Route path="/drinks/:id/in-progress" component={ DrinksInProgress } />
+      <Route exact path="/foods" component={ Foods } />
+      <Route exact path="/foods/:id" component={ FoodsRecipes } />
+      <Route exact path="/foods/:id/in-progress" component={ FoodsInProgress } />
+      <Route exact path="/drinks" component={ Drinks } />
+      <Route exact path="/drinks/:id/" component={ DrinksRecipes } />
+      <Route exact path="/drinks/:id/in-progress" component={ DrinksInProgress } />
       <Route path="/profile" component={ Profile } />
       <Route path="/done-recipes" component={ DoneRecipes } />
       <Route path="/favorite-recipes" component={ FavoriteRecipes } />
