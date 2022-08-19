@@ -2,6 +2,20 @@ import React from 'react';
 
 export default function Login() {
   return (
-    <div>Hello Word!!</div>
+    <div>
+      <input
+        data-testid="email-input"
+        type="email"
+        placeholder="Digite seu e-mail"
+      />
+      <input
+        data-testid="password-input"
+        type="password"
+        placeholder="Digite sua senha"
+      />
+      <button type="button" data-testid="login-submit-btn">
+        Enter
+      </button>
+    </div>
   );
 }
