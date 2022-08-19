@@ -20,7 +20,6 @@ export default function Login() {
 
   const handleDisable = () => {
     const five = 5; // alterar para useEffect se necessario
-    // validateEmail();
     if ((onValidate && login.length > five) && password.length > five) {
       setDisabled(false);
     } else {
@@ -32,6 +31,12 @@ export default function Login() {
     const { name, value } = target;
     handleDisable();
     return setLoginInfo((state) => ({ ...state, [name]: value }));
+  };
+
+  const handleClick = () => {
+    localStorage.setItem('user', JSON.stringify({ email: login }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
   };
 
   return (
@@ -56,6 +61,7 @@ export default function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ disabled }
+        onClick={ handleClick }
       >
         Enter
       </button>
