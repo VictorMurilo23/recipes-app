@@ -11,11 +11,11 @@ export default function Header({ pageName, search }) {
         {
           search && <img
             src={ searchIcon }
-            data-testid="profile-top-btn"
+            data-testid="search-top-btn"
             alt="Ícone de pesquisa"
           />
         }
-        <img src={ profileIcon } data-testid="search-top-btn" alt="Imagem perfil" />
+        <img src={ profileIcon } data-testid="profile-top-btn" alt="Imagem perfil" />
       </div>
     </header>
   );
