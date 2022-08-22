@@ -14,7 +14,7 @@ export default function Login({ history }) {
   const onValidate = regexValidate.test(login);
 
   const handleDisable = () => {
-    const five = 5; // alterar para useEffect se necessario
+    const five = 5; // alterar para useEffect se necessário
     if ((onValidate && login.length > five) && password.length > five) {
       setDisabled(false);
     } else {

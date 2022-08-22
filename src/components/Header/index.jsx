@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import searchIcon from '../../images/searchIcon.svg';
 import profileIcon from '../../images/profileIcon.svg';
+import SearchBar from '../SearchBar';
 
 export default function Header({ pageName, search }) {
   const history = useHistory();
@@ -14,9 +15,10 @@ export default function Header({ pageName, search }) {
   return (
     <header>
       <div>
-        <h1 data-testid="page-title">{ pageName }</h1>
-        {
-          search
+        <div>
+          <h1 data-testid="page-title">{ pageName }</h1>
+          {
+            search
           && (
             <button
               type="button"
@@ -30,15 +32,15 @@ export default function Header({ pageName, search }) {
                 alt="Ícone de pesquisa"
               />
             </button>)
-        }
+          }
+          <button type="button" onClick={ redirectProfile }>
+            <img src={ profileIcon } data-testid="profile-top-btn" alt="Imagem perfil" />
+          </button>
+        </div>
+
         {
-          showSearch && <input
-            data-testid="search-input"
-          />
+          showSearch && <SearchBar />
         }
-        <button type="button" onClick={ redirectProfile }>
-          <img src={ profileIcon } data-testid="profile-top-btn" alt="Imagem perfil" />
-        </button>
       </div>
     </header>
   );
