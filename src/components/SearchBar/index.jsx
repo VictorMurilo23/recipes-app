@@ -1,23 +1,32 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import context from '../../Context/loginContext';
-import getRecipes from '../../service/serviceApi';
+import getRecipes, { getRecipesDrinks } from '../../service/serviceApi';
 
 export default function SearchBar() {
+  const history = useHistory();
   const [searchValue, setSearchValue] = useState('');
   const [toggleId, setToggleId] = useState('');
-  const { recipeData, setRecipeData } = useContext(context);
+  const { recipeData, setRecipeData, locationPage } = useContext(context);
 
   useEffect(() => {
-    setToggleId(toggleId);
-  }, [toggleId]);
-
-  console.log(recipeData);
+    console.log(recipeData);
+    if (recipeData.length === 1) {
+      const { idMeal, idDrink } = recipeData[0];
+      history.push(`/${locationPage}/${idMeal || idDrink}`);
+    }
+  }, [recipeData]);
 
   const handleSubmit = async () => {
     if (toggleId === 'firstLetter' && searchValue.length !== 1) {
       global.alert('Your search must have only 1 (one) character');
     }
-    setRecipeData(await getRecipes(toggleId, searchValue));
+    if (locationPage === 'foods') {
+      setRecipeData(await getRecipes(toggleId, searchValue));
+    }
+    if (locationPage === 'drinks') {
+      setRecipeData(await getRecipesDrinks(toggleId, searchValue));
+    }
   };
 
   return (
