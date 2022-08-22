@@ -33,7 +33,6 @@ export default function Recipes({ pageName }) {
       setOrigalRecipes(data);
     };
     getResults();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   if (recipes.length === 0) {
