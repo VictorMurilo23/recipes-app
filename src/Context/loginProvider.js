@@ -4,9 +4,12 @@ import context from './loginContext';
 
 function Provider({ children }) {
   const [loginInfo, setLoginInfo] = useState({ login: '', password: '' });
+  const [recipeData, setRecipeData] = useState([]);
   const contextValue = {
     loginInfo,
     setLoginInfo,
+    recipeData,
+    setRecipeData,
   };
 
   return (
