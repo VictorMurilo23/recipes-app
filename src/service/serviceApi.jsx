@@ -22,3 +22,14 @@ export async function getMealsOrDrinks(type) {
   const data = await response.json();
   return data.drinks;
 }
+
+export async function getCategories(type) {
+  if (type === 'food') {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    const data = await response.json();
+    return data.meals;
+  }
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+  const data = await response.json();
+  return data.drinks;
+}
