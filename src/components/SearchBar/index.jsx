@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import context from '../../Context/loginContext';
-import getRecipes from '../../service/serviceApi';
+import { getRecipes } from '../../service/serviceApi';
 
 export default function SearchBar() {
   const [searchValue, setSearchValue] = useState('');

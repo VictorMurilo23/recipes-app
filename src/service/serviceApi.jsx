@@ -4,7 +4,7 @@ async function getSearch(query) {
   return data.meals;
 }
 
-function getRecipes(radio, search) {
+export function getRecipes(radio, search) {
   return {
     ingredient: getSearch(`filter.php?i=${search}`),
     name: getSearch(`search.php?s=${search}`),
@@ -12,4 +12,13 @@ function getRecipes(radio, search) {
   }[radio];
 }
 
-export default getRecipes;
+export async function getMealsOrDrinks(type) {
+  if (type === 'food') {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const data = await response.json();
+    return data.meals;
+  }
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const data = await response.json();
+  return data.drinks;
+}
