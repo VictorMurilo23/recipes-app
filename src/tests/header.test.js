@@ -4,6 +4,8 @@ import renderWithRouter from "./helpers/renderWithRouter"
 import userEvent from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
 
+jest.spyOn(global, 'alert');
+global.alert.mockImplementation(() => {});
 
 describe('Testes do Header', () => {
   it('Verifica se Header renderiza na tela', () => {
@@ -90,5 +92,7 @@ describe('Testes do Header', () => {
     userEvent.type(inputSearch, 'M')
     userEvent.click(radioFirstLetter)
     userEvent.click(btnSearchRecipe)
+
+    userEvent.click(btnSearchRecipe);
   } )
 })

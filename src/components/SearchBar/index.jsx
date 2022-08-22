@@ -10,16 +10,25 @@ export default function SearchBar() {
   const { recipeData, setRecipeData, locationPage } = useContext(context);
 
   useEffect(() => {
-    console.log(recipeData);
+    // console.log(recipeData);
+    if (!recipeData) {
+      global.alert("Sorry, we haven't found any recipes for these filters.");
+      return false;
+    }
     if (recipeData.length === 1) {
       const { idMeal, idDrink } = recipeData[0];
       history.push(`/${locationPage}/${idMeal || idDrink}`);
     }
+    if (recipeData.length > 1) {
+      history.push(`/${locationPage}`);
+    }
   }, [recipeData]);
 
   const handleSubmit = async () => {
+    // console.log(searchValue.length);
     if (toggleId === 'firstLetter' && searchValue.length !== 1) {
       global.alert('Your search must have only 1 (one) character');
+      return false;
     }
     if (locationPage === 'foods') {
       setRecipeData(await getRecipes(toggleId, searchValue));

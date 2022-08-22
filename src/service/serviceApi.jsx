@@ -11,7 +11,7 @@ async function getSearch(query) {
 function getRecipes(radio, search) {
   if (radio === 'ingredient') return getSearch(`filter.php?i=${search}`);
   if (radio === 'name') return getSearch(`search.php?s=${search}`);
-  if (radio === 'firstLetter') return getSearch(`search.php?f=${search}`);
+  if (radio === 'firstLetter') return getSearch(`search.php?f=${search}`); 
 }
 
 export default getRecipes;
