@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export default function CategoryBtn({ category }) {
+export default function CategoryBtn({ category, getCategoryRecipes }) {
   return (
     <button
       type="button"
+      onClick={ () => getCategoryRecipes(category) }
       data-testid={ `${category}-category-filter` }
     >
       {category}
@@ -13,5 +14,6 @@ export default function CategoryBtn({ category }) {
 }
 
 CategoryBtn.propTypes = {
-  category: PropTypes.string.isRequired,
-};
+  category: PropTypes.string,
+  getCategoryRecipes: PropTypes.func,
+}.isRequired;
