@@ -10,6 +10,7 @@ import CategoryBtn from '../CategoryBtn';
 
 export default function Recipes({ pageName }) {
   const [origalRecipes, setOrigalRecipes] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
   const [recipes, setRecipes] = useState([]);
   const [categories, setCategories] = useState([]);
 
@@ -50,11 +51,19 @@ export default function Recipes({ pageName }) {
         {
           categoriesSet.map((category) => (<CategoryBtn
             getCategoryRecipes={ getCategoryRecipes }
+            selectedCategory={ selectedCategory }
+            setSelectedCategory={ setSelectedCategory }
+            showAllRecipes={ showAllRecipes }
             key={ category.strCategory }
             category={ category.strCategory }
           />))
         }
-        <CategoryBtn category="All" getCategoryRecipes={ showAllRecipes } />
+        <CategoryBtn
+          category="All"
+          getCategoryRecipes={ showAllRecipes }
+          setSelectedCategory={ setSelectedCategory }
+          selectedCategory={ selectedCategory }
+        />
       </div>
 
       <div>
