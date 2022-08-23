@@ -1,7 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import context from '../../Context/loginContext';
+
 import getRecipes, { getRecipesDrinks } from '../../service/serviceApi';
+
 
 export default function SearchBar() {
   const history = useHistory();

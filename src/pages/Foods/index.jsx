@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from 'react';
 import Header from '../../components/Header';
 import context from '../../Context/loginContext';
+import Footer from '../../components/Footer';
+import Recipes from '../../components/Recipes';
 
 export default function Foods() {
   const { locationPage, setLocationPage, recipeData } = useContext(context);
@@ -21,6 +23,8 @@ export default function Foods() {
           <img src={strMealThumb} data-testid={`${index}-card-img`} alt="receita" />
         </div>
       ))}
+      <Recipes pageName="food" />
+      <Footer />
     </div>
   );
 }
