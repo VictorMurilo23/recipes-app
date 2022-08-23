@@ -41,9 +41,9 @@ export default function Recipes({ pageName }) {
 
   const twelve = 12;
   const five = 5;
-  const twelveRecipes = recipes.filter((recipe, index) => index < twelve);
+  const twelveRecipes = recipes.filter((_recipe, index) => index < twelve);
   const categoriesSet = categories
-    .filter((recipe, index) => index < five);
+    .filter((_recipe, index) => index < five);
   return (
     <div>
       <div>
