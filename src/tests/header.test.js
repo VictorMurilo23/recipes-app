@@ -3,9 +3,14 @@ import React from "react"
 import renderWithRouter from "./helpers/renderWithRouter"
 import userEvent from "@testing-library/user-event";
 import { screen } from "@testing-library/react";
+import recipes from './helpers/recipesMock';
+import tamiya from './helpers/mockTamiya';
+import abcRecipe from './helpers/mockAbc';
 
 jest.spyOn(global, 'alert');
 global.alert.mockImplementation(() => {});
+
+  afterEach(() => jest.clearAllMocks())
 
 describe('Testes do Header', () => {
   it('Verifica se Header renderiza na tela', () => {
@@ -95,4 +100,84 @@ describe('Testes do Header', () => {
 
     userEvent.click(btnSearchRecipe);
   } )
+  it('Rotas foods', () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => recipes
+    }));
+
+    const { history } =  renderWithRouter(<App />)
+
+    history.push('/foods')
+
+    const btnSearch = screen.getByRole('button', {
+      name: /ícone de pesquisa/i
+    })
+    userEvent.click(btnSearch)
+    
+    const inputSearch = screen.getByTestId('search-input')
+    const btnSearchRecipe = screen.getByTestId('exec-search-btn')
+    const radioName = screen.getByRole('radio', {
+      name: /name/i
+    })
+
+  
+    global.fetch = jest.fn(async () => ({
+      json: async () => tamiya
+    }));
+    
+    userEvent.type(inputSearch, 'Tamiya')
+    userEvent.click(radioName)
+    userEvent.click(btnSearchRecipe)
+    
+    expect(history.location.pathname).toBe('/foods')
+  })
+
+  it('Rotas drinks', () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => recipes
+    }));
+
+    const { history } =  renderWithRouter(<App />)
+
+    history.push('/drinks')
+
+    const btnSearch = screen.getByRole('button', {
+      name: /ícone de pesquisa/i
+    })
+    userEvent.click(btnSearch)
+    
+    const inputSearch = screen.getByTestId('search-input')
+    const btnSearchRecipe = screen.getByTestId('exec-search-btn')
+    const radioName = screen.getByRole('radio', {
+      name: /name/i
+    })
+
+  
+    global.fetch = jest.fn(async () => ({
+      json: async () => abcRecipe
+    }));
+    
+    userEvent.type(inputSearch, 'abc')
+    userEvent.click(radioName)
+    userEvent.click(btnSearchRecipe)
+    
+    expect(history.location.pathname).toBe('/drinks')
+  })
+
+  it ('teste', () => {
+    global.fetch = jest.fn(async () => ({
+      json: async () => recipes
+    }));
+    const { history } =  renderWithRouter(<App />)
+
+    history.push('/foods');
+
+      const btnSearch = screen.getByRole('button', {
+      name: /ícone de pesquisa/i
+    })
+    userEvent.click(btnSearch)
+
+    const btnSearchRecipe = screen.getByTestId('exec-search-btn')
+    userEvent.click(btnSearchRecipe);
+  })
 })

@@ -11,19 +11,25 @@ export default function Foods() {
     setLocationPage('foods');
   }, [locationPage]);
 
-  // console.log(recipeData)
+  const magicNum = 12;
+
+  const validadeObj = recipeData ? Object.values(recipeData) : [];
 
   return (
     <div>
       <Header pageName="Foods" />
-      {recipeData && recipeData.filter((recipe, index) => index < 12)
-      .map(({strMeal, strMealThumb}, index) => (
-        <div key={index} data-testid={`${index}-recipe-card`}>
-          <p data-testid={`${index}-card-name`}>{strMeal}</p>
-          <img src={strMealThumb} data-testid={`${index}-card-img`} alt="receita" />
-        </div>
-      ))}
-      <Recipes pageName="food" />
+      {validadeObj && validadeObj.length >= 1
+        ? recipeData.filter((recipe, i) => i < magicNum)
+          .map(({ strMeal, strMealThumb }, index) => (
+            <div key={ index } data-testid={ `${index}-recipe-card` }>
+              <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
+              <img
+                src={ strMealThumb }
+                data-testid={ `${index}-card-img` }
+                alt="receita"
+              />
+            </div>
+          )) : <Recipes pageName="food" />}
       <Footer />
     </div>
   );
