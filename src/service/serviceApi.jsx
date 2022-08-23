@@ -31,3 +31,36 @@ export function getRecipesDrinks(radio, search) {
   if (radio === 'name') return getSearchDrinks(`search.php?s=${search}`);
   if (radio === 'firstLetter') return getSearchDrinks(`search.php?f=${search}`);
 }
+
+export async function getMealsOrDrinks(type) {
+  if (type === 'food') {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=');
+    const data = await response.json();
+    return data.meals;
+  }
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
+  const data = await response.json();
+  return data.drinks;
+}
+
+export async function getCategories(type) {
+  if (type === 'food') {
+    const response = await fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    const data = await response.json();
+    return data.meals;
+  }
+  const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+  const data = await response.json();
+  return data.drinks;
+}
+
+export async function getRecipesByCategory(type, categoryName) {
+  if (type === 'food') {
+    const response = await fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+    const data = await response.json();
+    return data.meals;
+  }
+  const response = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${categoryName}`);
+  const data = await response.json();
+  return data.drinks;
+}
