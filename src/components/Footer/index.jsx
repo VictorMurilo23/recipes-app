@@ -9,13 +9,13 @@ export default function Footer() {
   return (
     <footer data-testid="footer" className="footer">
       <button type="button" onClick={ () => history.push('/drinks') }>
-        <img src={ drinkIcon } data-testid="drinks-bottom-btn" alt="Icone Drink" />
+        <img src={ drinkIcon } data-testid="drinks-bottom-btn" alt="Ícone Drink" />
       </button>
       <button type="button" onClick={ () => history.push('/foods') }>
         <img
           src={ mealIcon }
           data-testid="food-bottom-btn"
-          alt="Icone Food"
+          alt="Ícone Food"
         />
       </button>
     </footer>

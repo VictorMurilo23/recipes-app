@@ -7,7 +7,6 @@ export default function Recommendations({ typePage }) {
   const [recipesRecommender, setRecipesRecommender] = useState([]);
   const [currentIndex1, setCurrentIndex1] = useState(0);
   const [currentIndex2, setCurrentIndex2] = useState(1);
-  const [carousel, setCarousel] = useState([]);
 
   const imgUrl = typePage === 'drinks' ? 'strMealThumb' : 'strDrinkThumb';
   const title = typePage === 'drinks' ? 'strMeal' : 'strDrink';
