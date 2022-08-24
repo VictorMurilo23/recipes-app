@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import Recommendations from '../Recommendations';
 
 export default function RecipeDetails({ data, typePage }) {
   const imgUrl = typePage === 'drinks' ? data.strDrinkThumb : data.strMealThumb;
@@ -47,7 +48,8 @@ export default function RecipeDetails({ data, typePage }) {
           </p>
         ))}
       </div>
-      <div data-testid="0-recomendation-card"> recommendation </div>
+      <Recommendations typePage={ typePage } />
+      {/* <div data-testid="0-recomendation-card"> recommendation </div> */}
       {/* <div data-testid="${index}-recomendation-card"> recommendation </div> */}
     </div>
   );

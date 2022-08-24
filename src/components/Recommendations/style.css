@@ -1,0 +1,16 @@
+.img-recommended {
+  height: 100px;
+  padding: 15px;
+}
+
+.card-recommended {
+  border: 1px solid red;
+  width: 130px;
+}
+
+.container-recommended {
+  border: 1px solid green;
+  display: flex;
+  justify-content: center;
+
+}
