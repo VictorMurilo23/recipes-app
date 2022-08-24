@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { getMealDetail } from '../../service/serviceApi';
+import RecipeDetails from '../../components/RecipeDetails';
 
 export default function FoodsRecipes({ match: { params: { id } } }) {
   const [recipeMeal, setRecipeMeal] = useState('');
@@ -17,9 +18,9 @@ export default function FoodsRecipes({ match: { params: { id } } }) {
   }
 
   return (
-    <div>{}</div>
-    // <div>{console.log(recipeMeal)}</div>
-
+    <div>
+      <RecipeDetails data={ recipeMeal[0] } typePage="foods" />
+    </div>
   );
 }
 
