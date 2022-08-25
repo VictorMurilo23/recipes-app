@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
-// import { useState } from 'react-router-dom';
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
@@ -10,12 +9,9 @@ import mealIcon from '../../images/mealIcon.svg';
 const copy = require('clipboard-copy');
 
 export default function FavoriteRecipes() {
-  // const history = useHistory();
+  const history = useHistory();
   const [validateShare, setValidateShare] = useState(false);
   const [favRecipes, setFavRecipes] = useState([]);
-  // const [filteredRecipes, setFilteredRecipes] = useState([]);
-  // let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  // console.log(favoriteRecipes);
 
   const handleCopy = (id, type) => {
     if (type === 'food') {
@@ -27,29 +23,36 @@ export default function FavoriteRecipes() {
     }
   };
 
+  const handleRedirect = (id, type) => {
+    if (type === 'food') {
+      history.push(`/foods/${id}`);
+    } else {
+      history.push(`/drinks/${id}`);
+    }
+  };
+
   const removeFavorite = (idComp) => {
     const filter = favRecipes.filter(({ id }) => id !== idComp);
 
-    localStorage.setItem(
-      'favoriteRecipes',
-      JSON.stringify(filter),
-    );
+    localStorage.setItem('favoriteRecipes', JSON.stringify(filter));
     setFavRecipes(filter);
   };
 
-  const handleFilter = ({ target: { parentNode: { name } } }) => {
+  const handleFilter = ({
+    target: {
+      parentNode: { name },
+    },
+  }) => {
     // console.log(name);
     const localFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (name === 'food') {
       // setFavRecipes(localFavorite);
       // console.log(favRecipes);
-      setFavRecipes(favRecipes
-        .filter(({ type }) => type === 'food'));
+      setFavRecipes(favRecipes.filter(({ type }) => type === 'food'));
     } else if (name === 'drink') {
       // setFavRecipes(localFavorite);
       // console.log(favRecipes);
-      setFavRecipes(favRecipes
-        .filter(({ type }) => type === 'drink'));
+      setFavRecipes(favRecipes.filter(({ type }) => type === 'drink'));
     } else {
       setFavRecipes(localFavorite);
     }
@@ -59,9 +62,7 @@ export default function FavoriteRecipes() {
     setFavRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')) || []);
   }, []);
 
-  useEffect(() => {
-
-  }, [favRecipes]);
+  useEffect(() => {}, [favRecipes]);
 
   return (
     <div>
@@ -101,15 +102,24 @@ export default function FavoriteRecipes() {
             index,
           ) => (
             <div key={ index }>
-              <p data-testid={ `${index}-horizontal-name` }>{name}</p>
+              <p
+                data-testid={ `${index}-horizontal-name` }
+                aria-hidden="true"
+                onClick={ () => handleRedirect(id, type) }
+              >
+                {name}
+              </p>
               <p data-testid={ `${index}-horizontal-top-text` }>
                 {`${nationality} - ${category} ${alcoholicOrNot}`}
               </p>
-              <img
-                src={ image }
-                alt="comidas-favoritas"
-                data-testid={ `${index}-horizontal-image` }
-              />
+              <button type="button" onClick={ () => handleRedirect(id, type) }>
+                <img
+                  src={ image }
+                  alt="comidas-favoritas"
+                  data-testid={ `${index}-horizontal-image` }
+                  style={ { width: '100px' } }
+                />
+              </button>
               <div>
                 <button
                   className="handle-btn"
@@ -131,9 +141,7 @@ export default function FavoriteRecipes() {
                 >
                   <img src={ blackHeartIcon } alt="favorite" />
                 </button>
-                {
-                  validateShare && <span>Link copied!</span>
-                }
+                {validateShare && <span>Link copied!</span>}
               </div>
             </div>
           ),
