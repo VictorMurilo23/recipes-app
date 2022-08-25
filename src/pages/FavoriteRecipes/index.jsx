@@ -13,6 +13,7 @@ export default function FavoriteRecipes() {
   // const history = useHistory();
   const [validateShare, setValidateShare] = useState(false);
   const [favRecipes, setFavRecipes] = useState([]);
+  // const [filteredRecipes, setFilteredRecipes] = useState([]);
   // let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
   // console.log(favoriteRecipes);
 
@@ -27,14 +28,39 @@ export default function FavoriteRecipes() {
   };
 
   const removeFavorite = (idComp) => {
-    setFavRecipes(localStorage.setItem(
+    const filter = favRecipes.filter(({ id }) => id !== idComp);
+
+    localStorage.setItem(
       'favoriteRecipes',
-      JSON.stringify(favRecipes.filter(({ id }) => id !== idComp)),
-    ));
+      JSON.stringify(filter),
+    );
+    setFavRecipes(filter);
+  };
+
+  const handleFilter = ({ target: { parentNode: { name } } }) => {
+    // console.log(name);
+    const localFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    if (name === 'food') {
+      // setFavRecipes(localFavorite);
+      // console.log(favRecipes);
+      setFavRecipes(favRecipes
+        .filter(({ type }) => type === 'food'));
+    } else if (name === 'drink') {
+      // setFavRecipes(localFavorite);
+      // console.log(favRecipes);
+      setFavRecipes(favRecipes
+        .filter(({ type }) => type === 'drink'));
+    } else {
+      setFavRecipes(localFavorite);
+    }
   };
 
   useEffect(() => {
     setFavRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')) || []);
+  }, []);
+
+  useEffect(() => {
+
   }, [favRecipes]);
 
   return (
@@ -42,8 +68,9 @@ export default function FavoriteRecipes() {
       <Header pageName="Favorite Recipes" search={ false } />
       <button
         type="button"
-        onClick={ () => {} }
+        onClick={ handleFilter }
         data-testid="filter-by-drink-btn"
+        name="drink"
       >
         <img
           src={ drinkIcon }
@@ -51,14 +78,24 @@ export default function FavoriteRecipes() {
           alt="Ícone Drink"
         />
       </button>
-      <button type="button" onClick={ () => {} } data-testid="filter-by-food-btn">
+      <button
+        type="button"
+        onClick={ handleFilter }
+        data-testid="filter-by-food-btn"
+        name="food"
+      >
         <img src={ mealIcon } data-testid="food-bottom-btn" alt="Ícone Food" />
       </button>
-      <button type="button" onClick={ () => {} } data-testid="filter-by-all-btn">
+      <button
+        type="button"
+        onClick={ handleFilter }
+        data-testid="filter-by-all-btn"
+        name="all"
+      >
         ALL
       </button>
       <div>
-        {favRecipes && favRecipes.map(
+        {favRecipes.map(
           (
             { name, category, nationality, image, id, alcoholicOrNot, type },
             index,
