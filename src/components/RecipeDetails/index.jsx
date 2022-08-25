@@ -1,15 +1,18 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Recommendations from '../Recommendations';
 import './style.css';
 import shareIcon from '../../images/shareIcon.svg';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
 export default function RecipeDetails({ data, typePage }) {
   const history = useHistory();
   const [validadeShare, setValidadeShare] = useState(false);
+  const [favorite, setFavorite] = useState(false);
 
   const area = data.strArea ? data.strArea : '';
   const alcoholic = data.strAlcoholic ? data.strAlcoholic : '';
@@ -33,7 +36,6 @@ export default function RecipeDetails({ data, typePage }) {
       const inProgressRecipes = localStorage.getItem('inProgressRecipes')
         && JSON.parse(localStorage.getItem('inProgressRecipes'));
       const key = typePage === 'foods' ? 'meals' : 'cocktails';
-      console.log(inProgressRecipes[key]);
       const keys = Object.keys(inProgressRecipes[key]);
       return keys.includes(id);
     }
@@ -63,21 +65,47 @@ export default function RecipeDetails({ data, typePage }) {
     setValidadeShare(true);
   };
 
+  // const updateFavoriteHeart = () => {
+  //   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+  //   const xablau = favoriteRecipes.some(({ id: idSome }) => idSome === id);
+  //   setFavorite(!favorite);
+  // };
+
   const favoriteClick = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    localStorage.setItem('favoriteRecipes', JSON.stringify([
-      ...favoriteRecipes,
-      {
-        id,
-        type,
-        nationality: area,
-        category: data.strCategory,
-        alcoholicOrNot: alcoholic,
-        name: title,
-        image: imgUrl,
-      },
-    ]));
+    if (favorite) {
+      localStorage.setItem('favoriteRecipes', JSON.stringify(
+        favoriteRecipes.filter(({ id: idSome }) => idSome !== id),
+      ));
+      setFavorite(false);
+    } else {
+      localStorage.setItem('favoriteRecipes', JSON.stringify([
+        ...favoriteRecipes,
+        {
+          id,
+          type,
+          nationality: area,
+          category: data.strCategory,
+          alcoholicOrNot: alcoholic,
+          name: title,
+          image: imgUrl,
+        },
+      ]));
+      setFavorite(true);
+    }
+    // if (!favoriteRecipes.some(({ id: idSome }) => idSome === id)) {
+    //   updateFavoriteHeart();
+    // }
+    // if (favoriteRecipes.some(({ id: idSome }) => idSome === id)) {
+
+    // }
   };
+
+  useEffect(() => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const validationFavorite = favoriteRecipes.some(({ id: idSome }) => idSome === id);
+    setFavorite(validationFavorite);
+  }, [id]);
 
   return (
     <div>
@@ -127,8 +155,11 @@ export default function RecipeDetails({ data, typePage }) {
             type="button"
             data-testid="favorite-btn"
             onClick={ favoriteClick }
+            src={ favorite ? blackHeartIcon : whiteHeartIcon }
+
           >
-            Favorite
+            { favorite ? <img src={ blackHeartIcon } alt="favorite" />
+              : <img src={ whiteHeartIcon } alt="no favorite" /> }
           </button>
         </div>
         {
