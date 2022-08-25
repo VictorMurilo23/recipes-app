@@ -65,12 +65,6 @@ export default function RecipeDetails({ data, typePage }) {
     setValidadeShare(true);
   };
 
-  // const updateFavoriteHeart = () => {
-  //   const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  //   const xablau = favoriteRecipes.some(({ id: idSome }) => idSome === id);
-  //   setFavorite(!favorite);
-  // };
-
   const favoriteClick = () => {
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (favorite) {
@@ -93,12 +87,6 @@ export default function RecipeDetails({ data, typePage }) {
       ]));
       setFavorite(true);
     }
-    // if (!favoriteRecipes.some(({ id: idSome }) => idSome === id)) {
-    //   updateFavoriteHeart();
-    // }
-    // if (favoriteRecipes.some(({ id: idSome }) => idSome === id)) {
-
-    // }
   };
 
   useEffect(() => {
