@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+// import { useState } from 'react-router-dom';
 // import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
@@ -10,19 +11,31 @@ const copy = require('clipboard-copy');
 
 export default function FavoriteRecipes() {
   // const history = useHistory();
-  const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-  console.log(favoriteRecipes);
+  const [validateShare, setValidateShare] = useState(false);
+  const [favRecipes, setFavRecipes] = useState([]);
+  // let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+  // console.log(favoriteRecipes);
 
-  const handleCopy = () => {
-    copy(window.location.href);
+  const handleCopy = (id, type) => {
+    if (type === 'food') {
+      copy(`http://localhost:3000/foods/${id}`);
+      setValidateShare(true);
+    } else {
+      copy(`http://localhost:3000/drinks/${id}`);
+      setValidateShare(true);
+    }
   };
 
   const removeFavorite = (idComp) => {
-    localStorage.setItem(
+    setFavRecipes(localStorage.setItem(
       'favoriteRecipes',
-      JSON.stringify(favoriteRecipes.filter(({ id }) => id !== idComp)),
-    );
+      JSON.stringify(favRecipes.filter(({ id }) => id !== idComp)),
+    ));
   };
+
+  useEffect(() => {
+    setFavRecipes(JSON.parse(localStorage.getItem('favoriteRecipes')) || []);
+  }, [favRecipes]);
 
   return (
     <div>
@@ -45,20 +58,14 @@ export default function FavoriteRecipes() {
         ALL
       </button>
       <div>
-        {favoriteRecipes
-          .map(({
-            name,
-            category,
-            nationality,
-            image,
-            id,
-            alcoholicOrNot,
-          }, index) => (
+        {favRecipes && favRecipes.map(
+          (
+            { name, category, nationality, image, id, alcoholicOrNot, type },
+            index,
+          ) => (
             <div key={ index }>
               <p data-testid={ `${index}-horizontal-name` }>{name}</p>
-              <p
-                data-testid={ `${index}-horizontal-top-text` }
-              >
+              <p data-testid={ `${index}-horizontal-top-text` }>
                 {`${nationality} - ${category} ${alcoholicOrNot}`}
               </p>
               <img
@@ -70,7 +77,7 @@ export default function FavoriteRecipes() {
                 <button
                   className="handle-btn"
                   type="button"
-                  onClick={ handleCopy }
+                  onClick={ () => handleCopy(id, type) }
                 >
                   <img
                     src={ shareIcon }
@@ -87,9 +94,13 @@ export default function FavoriteRecipes() {
                 >
                   <img src={ blackHeartIcon } alt="favorite" />
                 </button>
+                {
+                  validateShare && <span>Link copied!</span>
+                }
               </div>
             </div>
-          ))}
+          ),
+        )}
       </div>
     </div>
   );
