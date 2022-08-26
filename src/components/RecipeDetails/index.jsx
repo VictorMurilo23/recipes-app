@@ -47,7 +47,6 @@ export default function RecipeDetails({ data, typePage }) {
       .map((_elem, index) => data[ingredientsArray[index]]);
     const key = typePage === 'foods' ? 'meals' : 'cocktails';
     const invertKey = typePage === 'foods' ? 'cocktails' : 'meals';
-    // console.log(inProgressRecipes);
     const teste = inProgressRecipes[key] && inProgressRecipes[key][id]
       ? [...inProgressRecipes[key][id]]
       : ingre;
