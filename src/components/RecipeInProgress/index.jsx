@@ -84,17 +84,15 @@ export default function RecipeInProgress({ data, typePage }) {
     }
   };
 
-  setTimeout(() => {
-    useEffect(() => {
-      console.log(data);
-      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-      const getLocalStorageIngredientes = JSON
-        .parse(localStorage.getItem('inProgressRecipes'))[key][id] || [];
-      const validationFavorite = favoriteRecipes.some(({ id: idSome }) => idSome === id);
-      setUpdateIngredients(getLocalStorageIngredientes);
-      setFavorite(validationFavorite);
-    }, [id]);
-  }, 1000);
+  useEffect(() => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const getLocalStorageIngredientes = JSON
+      .parse(localStorage.getItem('inProgressRecipes')) ? JSON
+        .parse(localStorage.getItem('inProgressRecipes'))[key][id] : [];
+    const validationFavorite = favoriteRecipes.some(({ id: idSome }) => idSome === id);
+    setUpdateIngredients(getLocalStorageIngredientes);
+    setFavorite(validationFavorite);
+  }, []);
 
   useEffect(() => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
@@ -139,7 +137,7 @@ export default function RecipeInProgress({ data, typePage }) {
                   updateIngredients
                     .some((elem) => elem === data[ingredientsArray[index]])
                 }
-                onClick={ () => updateCheckedBox(data[ingredientsArray[index]]) }
+                onChange={ () => updateCheckedBox(data[ingredientsArray[index]]) }
               />
               <p>{data[ingredientsArray[index]]}</p>
               <p>{data[measureArray[index]]}</p>
@@ -163,14 +161,13 @@ export default function RecipeInProgress({ data, typePage }) {
             data-testid="favorite-btn"
             onClick={ favoriteClick }
             src={ favorite ? blackHeartIcon : whiteHeartIcon }
-
           >
             { favorite ? <img src={ blackHeartIcon } alt="favorite" />
               : <img src={ whiteHeartIcon } alt="no favorite" /> }
           </button>
         </div>
         {
-          validadeShare && <p>Link copied!</p>
+          validadeShare && <span>Link copied!</span>
         }
       </div>
       <button
