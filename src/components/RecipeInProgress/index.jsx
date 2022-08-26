@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import copy from 'clipboard-copy';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
@@ -7,6 +8,7 @@ import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import './style.css';
 
 export default function RecipeInProgress({ data, typePage }) {
+  const history = useHistory();
   const [favorite, setFavorite] = useState(false);
   const [validadeShare, setValidadeShare] = useState(false);
   const [updateIngredients, setUpdateIngredients] = useState([]);
@@ -163,6 +165,7 @@ export default function RecipeInProgress({ data, typePage }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ updateIngredients.length !== 0 }
+        onClick={ () => history.push('/done-recipes') }
       >
         Finalizar Receita
       </button>
