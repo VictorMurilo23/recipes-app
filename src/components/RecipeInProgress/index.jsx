@@ -10,21 +10,6 @@ export default function RecipeInProgress({ data, typePage }) {
   const [favorite, setFavorite] = useState(false);
   const [validadeShare, setValidadeShare] = useState(false);
   const [updateIngredients, setUpdateIngredients] = useState([]);
-  // const [validadeTypePage, setValidadeTypePage] = useState(false);
-
-  // useEffect(() => {
-
-  //   const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-  //   localStorage.setItem('inProgressRecipes', JSON.stringify({
-  //     [key]: {
-  //       ...inProgressRecipes[key],
-  //       [id]: updateIngredients,
-  //     },
-  //     [invertKey]: {
-  //       ...inProgressRecipes[invertKey],
-  //     },
-  //   }));
-  // }, [validadeTypePage]);
 
   const key = typePage === 'foods' ? 'meals' : 'cocktails';
   const invertKey = typePage === 'foods' ? 'cocktails' : 'meals';
@@ -86,9 +71,11 @@ export default function RecipeInProgress({ data, typePage }) {
   };
 
   useEffect(() => {
+    const ingre = ingredientsArray
+      .map((_elem, index) => data[ingredientsArray[index]]);
     const getLocalStorageIngredientes = JSON
       .parse(localStorage.getItem('inProgressRecipes')) ? JSON
-        .parse(localStorage.getItem('inProgressRecipes'))[key][id] : [];
+        .parse(localStorage.getItem('inProgressRecipes'))[key][id] : ingre;
     setUpdateIngredients(getLocalStorageIngredientes);
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const validationFavorite = favoriteRecipes.some(({ id: idSome }) => idSome === id);
@@ -122,7 +109,7 @@ export default function RecipeInProgress({ data, typePage }) {
         { ingredientsArray.map((_elem, index) => (
           <div key={ data[ingredientsArray[index]] } className="row-ingredient">
             <label
-              className={ updateIngredients
+              className={ !updateIngredients
                 .some((elem) => elem === data[ingredientsArray[index]])
                 ? 'label-ingredient-checked' : 'label-ingredient' }
               htmlFor={ data[ingredientsArray[index]] }
@@ -135,7 +122,7 @@ export default function RecipeInProgress({ data, typePage }) {
                 name={ data[ingredientsArray[index]] }
                 id={ data[ingredientsArray[index]] }
                 checked={
-                  updateIngredients
+                  !updateIngredients
                     .some((elem) => elem === data[ingredientsArray[index]])
                 }
                 onChange={ () => updateCheckedBox(data[ingredientsArray[index]]) }
@@ -172,8 +159,10 @@ export default function RecipeInProgress({ data, typePage }) {
         }
       </div>
       <button
+        className="finishedRecipes"
         type="button"
         data-testid="finish-recipe-btn"
+        disabled={ updateIngredients.length !== 0 }
       >
         Finalizar Receita
       </button>

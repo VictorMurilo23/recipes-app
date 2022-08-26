@@ -14,3 +14,8 @@
   display: flex;
   text-decoration: line-through;
 }
+
+.finishedRecipes {
+  bottom: 0;
+  position: fixed;
+}

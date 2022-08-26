@@ -18,7 +18,6 @@ export default function FoodsInProgress({ match: { params: { id } } }) {
     <div>
       Hello Word! estou no FoodsInProgress!
       <RecipeInProgress data={ foodsInProgress[0] } typePage="foods" />
-      {console.log('passei no foodsInProgress')}
     </div>
   );
 }
