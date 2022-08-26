@@ -1,18 +1,20 @@
-import PropTypes from 'prop-types';
-import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
 import copy from 'clipboard-copy';
-import Recommendations from '../Recommendations';
-import './style.css';
+import { useHistory } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
+import './style.css';
 
-export default function RecipeDetails({ data, typePage }) {
+export default function RecipeInProgress({ data, typePage }) {
   const history = useHistory();
-  const [validadeShare, setValidadeShare] = useState(false);
   const [favorite, setFavorite] = useState(false);
+  const [validadeShare, setValidadeShare] = useState(false);
+  const [updateIngredients, setUpdateIngredients] = useState([]);
 
+  const key = typePage === 'foods' ? 'meals' : 'cocktails';
+  const invertKey = typePage === 'foods' ? 'cocktails' : 'meals';
   const area = data.strArea ? data.strArea : '';
   const alcoholic = data.strAlcoholic ? data.strAlcoholic : '';
   const type = typePage === 'drinks' ? 'drink' : 'food';
@@ -25,44 +27,15 @@ export default function RecipeDetails({ data, typePage }) {
     .filter((ingredients) => ingredients
       .includes('strIngredient') && data[ingredients]);
 
-  const endPointVideo = typePage === 'foods' && data.strYoutube.split('=')[1];
-
   const measureArray = ingredientsArray
     .map((_measure, index) => `strMeasure${index + 1}`);
 
-  const isRecipeOnGoing = () => {
-    if (localStorage.getItem('inProgressRecipes')) {
-      const inProgressRecipes = localStorage.getItem('inProgressRecipes')
-        && JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const key = typePage === 'foods' ? 'meals' : 'cocktails';
-      const keys = Object.keys(inProgressRecipes[key]);
-      return keys.includes(id);
-    }
-    return false;
-  };
-
-  const startRecipes = () => {
-    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    const ingre = ingredientsArray
-      .map((_elem, index) => data[ingredientsArray[index]]);
-    const key = typePage === 'foods' ? 'meals' : 'cocktails';
-    const invertKey = typePage === 'foods' ? 'cocktails' : 'meals';
-    const teste = inProgressRecipes[key] ? [...inProgressRecipes[key][id]]
-      : ingre;
-    localStorage.setItem('inProgressRecipes', JSON.stringify({
-      [key]: {
-        ...inProgressRecipes[key],
-        [id]: teste,
-      },
-      [invertKey]: {
-        ...inProgressRecipes[invertKey],
-      },
-    }));
-    history.push(`/${typePage}/${id}/in-progress`);
-  };
-
   const handleCopy = () => {
-    copy(window.location.href);
+    if (type === 'food') {
+      copy(`http://localhost:3000/foods/${id}`);
+    } else {
+      copy(`http://localhost:3000/drinks/${id}`);
+    }
     setValidadeShare(true);
   };
 
@@ -90,11 +63,39 @@ export default function RecipeDetails({ data, typePage }) {
     }
   };
 
+  const updateCheckedBox = (ingredient) => {
+    if (!updateIngredients.some((elem) => elem === ingredient)) {
+      setUpdateIngredients((prevState) => [...prevState, ingredient]);
+    } else {
+      setUpdateIngredients((prevState) => prevState
+        .filter((element) => element !== ingredient));
+    }
+  };
+
   useEffect(() => {
+    const ingre = ingredientsArray
+      .map((_elem, index) => data[ingredientsArray[index]]);
+    const getLocalStorageIngredientes = JSON
+      .parse(localStorage.getItem('inProgressRecipes')) ? JSON
+        .parse(localStorage.getItem('inProgressRecipes'))[key][id] : ingre;
+    setUpdateIngredients(getLocalStorageIngredientes);
     const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const validationFavorite = favoriteRecipes.some(({ id: idSome }) => idSome === id);
     setFavorite(validationFavorite);
-  }, [id]);
+  }, []);
+
+  useEffect(() => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      [key]: {
+        ...inProgressRecipes[key],
+        [id]: updateIngredients,
+      },
+      [invertKey]: {
+        ...inProgressRecipes[invertKey],
+      },
+    }));
+  }, [updateIngredients]);
 
   return (
     <div>
@@ -106,27 +107,32 @@ export default function RecipeDetails({ data, typePage }) {
       />
       <p data-testid="recipe-category">{categoryText}</p>
       <p data-testid="instructions">{instruction}</p>
-      { typePage === 'foods'
-      && <iframe
-        data-testid="video"
-        width="560"
-        height="315"
-        src={ `https://www.youtube.com/embed/${endPointVideo}` }
-        title="YouTube video player"
-        frameBorder="0"
-        allow="accelerometer;
-      autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowFullScreen
-      />}
       <div>
         { ingredientsArray.map((_elem, index) => (
-          <p
-            key={ index }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
-            {data[ingredientsArray[index]]}
-            {data[measureArray[index]]}
-          </p>
+          <div key={ data[ingredientsArray[index]] } className="row-ingredient">
+            <label
+              className={ !updateIngredients
+                .some((elem) => elem === data[ingredientsArray[index]])
+                ? 'label-ingredient-checked' : 'label-ingredient' }
+              htmlFor={ data[ingredientsArray[index]] }
+              data-testid={ `${index}-ingredient-step` }
+            >
+
+              <input
+                className="checked-progress"
+                type="checkbox"
+                name={ data[ingredientsArray[index]] }
+                id={ data[ingredientsArray[index]] }
+                checked={
+                  !updateIngredients
+                    .some((elem) => elem === data[ingredientsArray[index]])
+                }
+                onChange={ () => updateCheckedBox(data[ingredientsArray[index]]) }
+              />
+              <p>{data[ingredientsArray[index]]}</p>
+              <p>{data[measureArray[index]]}</p>
+            </label>
+          </div>
         ))}
       </div>
       <div>
@@ -145,7 +151,6 @@ export default function RecipeDetails({ data, typePage }) {
             data-testid="favorite-btn"
             onClick={ favoriteClick }
             src={ favorite ? blackHeartIcon : whiteHeartIcon }
-
           >
             { favorite ? <img src={ blackHeartIcon } alt="favorite" />
               : <img src={ whiteHeartIcon } alt="no favorite" /> }
@@ -155,22 +160,20 @@ export default function RecipeDetails({ data, typePage }) {
           validadeShare && <span>Link copied!</span>
         }
       </div>
-      <Recommendations typePage={ typePage } />
       <button
+        className="finishedRecipes"
         type="button"
-        className="start-recipe-btn"
-        data-testid="start-recipe-btn"
-        onClick={ () => startRecipes() }
+        data-testid="finish-recipe-btn"
+        disabled={ updateIngredients.length !== 0 }
+        onClick={ () => history.push('/done-recipes') }
       >
-        {
-          isRecipeOnGoing() ? 'Continue Recipe' : 'Start Recipe'
-        }
+        Finalizar Receita
       </button>
     </div>
   );
 }
 
-RecipeDetails.propTypes = {
+RecipeInProgress.propTypes = {
   data: PropTypes.shape({
     strCategory: PropTypes.string,
     strDrink: PropTypes.string,
