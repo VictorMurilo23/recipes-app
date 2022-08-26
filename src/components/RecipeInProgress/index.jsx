@@ -44,10 +44,11 @@ export default function RecipeInProgress({ data, typePage }) {
     .map((_measure, index) => `strMeasure${index + 1}`);
 
   const handleCopy = () => {
-    const link = (window.location.href);
-    const link2 = link.trimEnd('/in-progress');
-    console.log(link2);
-    copy(window.location.href);
+    if (type === 'food') {
+      copy(`http://localhost:3000/foods/${id}`);
+    } else {
+      copy(`http://localhost:3000/drinks/${id}`);
+    }
     setValidadeShare(true);
   };
 
@@ -85,12 +86,12 @@ export default function RecipeInProgress({ data, typePage }) {
   };
 
   useEffect(() => {
-    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     const getLocalStorageIngredientes = JSON
       .parse(localStorage.getItem('inProgressRecipes')) ? JSON
         .parse(localStorage.getItem('inProgressRecipes'))[key][id] : [];
-    const validationFavorite = favoriteRecipes.some(({ id: idSome }) => idSome === id);
     setUpdateIngredients(getLocalStorageIngredientes);
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const validationFavorite = favoriteRecipes.some(({ id: idSome }) => idSome === id);
     setFavorite(validationFavorite);
   }, []);
 
