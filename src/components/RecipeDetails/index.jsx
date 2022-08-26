@@ -47,7 +47,9 @@ export default function RecipeDetails({ data, typePage }) {
       .map((_elem, index) => data[ingredientsArray[index]]);
     const key = typePage === 'foods' ? 'meals' : 'cocktails';
     const invertKey = typePage === 'foods' ? 'cocktails' : 'meals';
-    const teste = inProgressRecipes[key] ? [...inProgressRecipes[key][id]]
+    // console.log(inProgressRecipes);
+    const teste = inProgressRecipes[key] && inProgressRecipes[key][id]
+      ? [...inProgressRecipes[key][id]]
       : ingre;
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       [key]: {

@@ -63,19 +63,6 @@ export default function RecipeInProgress({ data, typePage }) {
     }
   };
 
-  // [{
-  //   id: id-da-receita,
-  //   type: comida-ou-bebida,
-  //   nationality: nacionalidade-da-receita-ou-texto-vazio,
-  //   category: categoria-da-receita-ou-texto-vazio,
-  //   alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-  //   name: nome-da-receita,
-  //   image: imagem-da-receita,
-  //   doneDate: quando-a-receita-foi-concluida,
-  //   tags: array-de-tags-da-receita-ou-array-vazio
-  // }]
-  // history.push('/done-recipes')
-
   const saveDoneRecipe = () => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
     localStorage.setItem('inProgressRecipes', JSON.stringify({
@@ -89,7 +76,7 @@ export default function RecipeInProgress({ data, typePage }) {
     }));
 
     const doneRecipes = localStorage.getItem('doneRecipes') || [];
-    const tags = data.strTags === null ? [] : data.strTags;
+    const tags = data.strTags === null ? [] : data.strTags.split(',');
     const today = new Date().toLocaleDateString();
     localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {
       id,
@@ -102,6 +89,7 @@ export default function RecipeInProgress({ data, typePage }) {
       doneDate: today,
       tags,
     }]));
+    history.push('/done-recipes');
   };
 
   const updateCheckedBox = (ingredient) => {

@@ -1,46 +1,87 @@
 import React, { useEffect, useState } from 'react';
+import copy from 'clipboard-copy';
+import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
-// import { useHistory } from 'react-router-dom';
-import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import drinkIcon from '../../images/drinkIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
 
 export default function DoneRecipes() {
-  const done = JSON.parse(localStorage.getItem('doneRecipes'));
+  const [validateShare, setValidateShare] = useState(false);
+  const [doneRecipes, setDoneRecipes] = useState([]);
+  const history = useHistory();
+
+  const handleFilter = ({
+    target: {
+      parentNode: { name },
+    },
+  }) => {
+    const localDone = JSON.parse(localStorage.getItem('doneRecipes')) || [];
+    if (name === 'food') {
+      setDoneRecipes(doneRecipes.filter(({ type }) => type === 'food'));
+    } else if (name === 'drink') {
+      setDoneRecipes(doneRecipes.filter(({ type }) => type === 'drink'));
+    } else {
+      setDoneRecipes(localDone);
+    }
+  };
+
+  useEffect(() => {
+    setDoneRecipes(JSON.parse(localStorage.getItem('doneRecipes')) || []);
+  }, []);
+
+  useEffect(() => {}, [setDoneRecipes]);
+
+  const handleCopy = (id, type) => {
+    if (type === 'food') {
+      copy(`http://localhost:3000/foods/${id}`);
+      setValidateShare(true);
+    } else {
+      copy(`http://localhost:3000/drinks/${id}`);
+      setValidateShare(true);
+    }
+  };
+
+  const handleRedirect = (id, type) => {
+    if (type === 'food') {
+      history.push(`/foods/${id}`);
+    } else {
+      history.push(`/drinks/${id}`);
+    }
+  };
+
   return (
     <div>
       <Header pageName="Done Recipes" search={ false } />
       <button
         type="button"
-        // onClick={ handleFilter }
+        onClick={ handleFilter }
         data-testid="filter-by-drink-btn"
         name="drink"
       >
         <img
           src={ drinkIcon }
-          data-testid="drinks-bottom-btn"
           alt="Ícone Drink"
         />
       </button>
       <button
         type="button"
-        // onClick={ handleFilter }
+        onClick={ handleFilter }
         data-testid="filter-by-food-btn"
         name="food"
       >
-        <img src={ mealIcon } data-testid="food-bottom-btn" alt="Ícone Food" />
+        <img src={ mealIcon } alt="Ícone Food" />
       </button>
       <button
         type="button"
-        // onClick={ handleFilter }
+        onClick={ handleFilter }
         data-testid="filter-by-all-btn"
         name="all"
       >
         ALL
       </button>
       <div>
-        {done.map(
+        {doneRecipes.map(
           (
             { name, category, nationality, image, id, alcoholicOrNot, type, doneDate,
               tags },
@@ -84,17 +125,9 @@ export default function DoneRecipes() {
                     data-testid={ `${index}-horizontal-share-btn` }
                   />
                 </button>
-                <button
-                  className="handle-btn"
-                  type="button"
-                  data-testid={ `${index}-horizontal-favorite-btn` }
-                  src={ blackHeartIcon }
-                  onClick={ () => removeFavorite(id) }
-                >
-                  <img src={ blackHeartIcon } alt="favorite" />
-                </button>
+                {validateShare && <span>Link copied!</span>}
                 <div>
-                  {tags.map((element) => (
+                  { tags.length > 0 && tags.map((element) => (
                     <p
                       data-testid={ `${index}-${element}-horizontal-tag` }
                       key={ element }
@@ -110,19 +143,3 @@ export default function DoneRecipes() {
     </div>
   );
 }
-
-// [{
-//   id: id-da-receita,
-//   type: comida-ou-bebida,
-//   nationality: nacionalidade-da-receita-ou-texto-vazio,
-//   category: categoria-da-receita-ou-texto-vazio,
-//   alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
-//   name: nome-da-receita,
-//   image: imagem-da-receita,
-//   doneDate: quando-a-receita-foi-concluida,
-//   tags: array-de-tags-da-receita-ou-array-vazio
-// }]
-
-// let today = new Date().toLocaleDateString()
-
-// console.log(today)
