@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import Recommendations from '../Recommendations';
 import './style.css';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
-
-const copy = require('clipboard-copy');
 
 export default function RecipeDetails({ data, typePage }) {
   const history = useHistory();
@@ -44,14 +43,14 @@ export default function RecipeDetails({ data, typePage }) {
 
   const startRecipes = () => {
     const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
-    const ingredients = ingredientsArray
+    ingredientsArray
       .map((_elem, index) => data[ingredientsArray[index]]);
     const key = typePage === 'foods' ? 'meals' : 'cocktails';
     const invertKey = typePage === 'foods' ? 'cocktails' : 'meals';
     localStorage.setItem('inProgressRecipes', JSON.stringify({
       [key]: {
         ...inProgressRecipes[key],
-        [id]: ingredients,
+        [id]: [],
       },
       [invertKey]: {
         ...inProgressRecipes[invertKey],
@@ -97,6 +96,7 @@ export default function RecipeDetails({ data, typePage }) {
 
   return (
     <div>
+      {console.log('passei no recipeDetails')}
       <h2 data-testid="recipe-title">{title}</h2>
       <img
         src={ imgUrl }

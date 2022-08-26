@@ -1,7 +1,33 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import { getMealDetail } from '../../service/serviceApi';
+import RecipeInProgress from '../../components/RecipeInProgress';
 
-export default function FoodsInProgress() {
+export default function FoodsInProgress({ match: { params: { id } } }) {
+  const [foodsInProgress, setFoodsInProgress] = useState([]);
+
+  useEffect(() => {
+    const getFoods = async () => setFoodsInProgress(await getMealDetail(id));
+    getFoods();
+  }, [id]);
+
+  if (foodsInProgress.length === 0) {
+    return <h1>Loading...</h1>;
+  }
   return (
-    <div>FoodsInsss</div>
+    <div>
+      Hello Word! estou no FoodsInProgress!
+      <RecipeInProgress data={ foodsInProgress[0] } typePage="foods" />
+      {console.log('passei no foodsInProgress')}
+    </div>
   );
 }
+
+FoodsInProgress.propTypes = {
+  match: PropTypes.shape(
+    { params: PropTypes.shape(
+      { id: PropTypes.number.isRequired },
+    ).isRequired,
+    }.isRequired,
+  ).isRequired,
+};
