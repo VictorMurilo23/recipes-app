@@ -63,6 +63,47 @@ export default function RecipeInProgress({ data, typePage }) {
     }
   };
 
+  // [{
+  //   id: id-da-receita,
+  //   type: comida-ou-bebida,
+  //   nationality: nacionalidade-da-receita-ou-texto-vazio,
+  //   category: categoria-da-receita-ou-texto-vazio,
+  //   alcoholicOrNot: alcoholic-ou-non-alcoholic-ou-texto-vazio,
+  //   name: nome-da-receita,
+  //   image: imagem-da-receita,
+  //   doneDate: quando-a-receita-foi-concluida,
+  //   tags: array-de-tags-da-receita-ou-array-vazio
+  // }]
+  // history.push('/done-recipes')
+
+  const saveDoneRecipe = () => {
+    const inProgressRecipes = JSON.parse(localStorage.getItem('inProgressRecipes')) || [];
+    localStorage.setItem('inProgressRecipes', JSON.stringify({
+      [key]: {
+        ...inProgressRecipes[key],
+        [id]: updateIngredients,
+      },
+      [invertKey]: {
+        ...inProgressRecipes[invertKey],
+      },
+    }));
+
+    const doneRecipes = localStorage.getItem('doneRecipes') || [];
+    const tags = data.strTags === null ? [] : data.strTags;
+    const today = new Date().toLocaleDateString();
+    localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {
+      id,
+      type,
+      nationality: area,
+      category: data.strCategory,
+      alcoholicOrNot: alcoholic,
+      name: title,
+      image: imgUrl,
+      doneDate: today,
+      tags,
+    }]));
+  };
+
   const updateCheckedBox = (ingredient) => {
     if (!updateIngredients.some((elem) => elem === ingredient)) {
       setUpdateIngredients((prevState) => [...prevState, ingredient]);
@@ -165,7 +206,7 @@ export default function RecipeInProgress({ data, typePage }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ updateIngredients.length !== 0 }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ saveDoneRecipe }
       >
         Finalizar Receita
       </button>
