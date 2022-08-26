@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import copy from 'clipboard-copy';
 import Header from '../../components/Header';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import drinkIcon from '../../images/drinkIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
-
-const copy = require('clipboard-copy');
 
 export default function FavoriteRecipes() {
   const history = useHistory();
@@ -43,15 +42,10 @@ export default function FavoriteRecipes() {
       parentNode: { name },
     },
   }) => {
-    // console.log(name);
     const localFavorite = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
     if (name === 'food') {
-      // setFavRecipes(localFavorite);
-      // console.log(favRecipes);
       setFavRecipes(favRecipes.filter(({ type }) => type === 'food'));
     } else if (name === 'drink') {
-      // setFavRecipes(localFavorite);
-      // console.log(favRecipes);
       setFavRecipes(favRecipes.filter(({ type }) => type === 'drink'));
     } else {
       setFavRecipes(localFavorite);
@@ -75,7 +69,6 @@ export default function FavoriteRecipes() {
       >
         <img
           src={ drinkIcon }
-          data-testid="drinks-bottom-btn"
           alt="Ícone Drink"
         />
       </button>
@@ -85,7 +78,7 @@ export default function FavoriteRecipes() {
         data-testid="filter-by-food-btn"
         name="food"
       >
-        <img src={ mealIcon } data-testid="food-bottom-btn" alt="Ícone Food" />
+        <img src={ mealIcon } alt="Ícone Food" />
       </button>
       <button
         type="button"
