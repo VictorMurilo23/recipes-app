@@ -19,18 +19,22 @@ export default function Foods() {
   return (
     <div>
       <Header pageName="Foods" />
-      <div className="container-meals">
+      <div className="container-recipes">
         {validadeObj && validadeObj.length >= 1
           ? recipeData.filter((recipe, i) => i < magicNum)
             .map(({ strMeal, strMealThumb }, index) => (
-              <div key={ index } data-testid={ `${index}-recipe-card` }>
-                <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
+              <div
+                key={ index }
+                className="container-recipe"
+                data-testid={ `${index}-recipe-card` }
+              >
                 <img
                   className="image-foods"
                   src={ strMealThumb }
                   data-testid={ `${index}-card-img` }
                   alt="receita"
                 />
+                <p data-testid={ `${index}-card-name` }>{ strMeal }</p>
               </div>
             )) : <Recipes pageName="food" />}
       </div>
