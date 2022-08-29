@@ -127,16 +127,22 @@ export default function RecipeInProgress({ data, typePage }) {
   }, [updateIngredients]);
 
   return (
-    <div>
+    <div className="container-recipe-info">
       <h2 data-testid="recipe-title">{title}</h2>
+      <p data-testid="recipe-category">{categoryText}</p>
       <img
         src={ imgUrl }
         alt={ title }
         data-testid="recipe-photo"
+        className="image-recipe-detail"
       />
-      <p data-testid="recipe-category">{categoryText}</p>
-      <p data-testid="instructions">{instruction}</p>
-      <div>
+
+      <h3>Instructions</h3>
+      <div className="container-info">
+        <p data-testid="instructions">{instruction}</p>
+      </div>
+      <h3>Ingredients</h3>
+      <div className="container-info">
         { ingredientsArray.map((_elem, index) => (
           <div key={ data[ingredientsArray[index]] } className="row-ingredient">
             <label
@@ -158,14 +164,19 @@ export default function RecipeInProgress({ data, typePage }) {
                 }
                 onChange={ () => updateCheckedBox(data[ingredientsArray[index]]) }
               />
-              <p>{data[ingredientsArray[index]]}</p>
-              <p>{data[measureArray[index]]}</p>
+              <p>
+                {data[ingredientsArray[index]]}
+                {' '}
+                -
+                {' '}
+                {data[measureArray[index]]}
+              </p>
             </label>
           </div>
         ))}
       </div>
-      <div>
-        <div>
+      <div className="buttonsContainer">
+        <div className="btn-recipe-details">
           <button
             className="handle-btn"
             type="button"
@@ -180,14 +191,17 @@ export default function RecipeInProgress({ data, typePage }) {
             data-testid="favorite-btn"
             onClick={ favoriteClick }
             src={ favorite ? blackHeartIcon : whiteHeartIcon }
+
           >
             { favorite ? <img src={ blackHeartIcon } alt="favorite" />
               : <img src={ whiteHeartIcon } alt="no favorite" /> }
           </button>
         </div>
-        {
-          validadeShare && <span>Link copied!</span>
-        }
+        <div className="span-copy">
+          {
+            validadeShare && <span>Link copied!</span>
+          }
+        </div>
       </div>
       <button
         className="finishedRecipes"

@@ -17,7 +17,6 @@ export default function DrinksInProgress({ match: { params: { id } } }) {
 
   return (
     <div>
-      Hello Word! estou no DrinksInProgress!
       <RecipeInProgress data={ drinksInProgress[0] } typePage="drinks" />
     </div>
   );

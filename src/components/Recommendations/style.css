@@ -11,13 +11,27 @@
 }
 
 .card-recommended {
-  border: 1px solid red;
+
+  /* border: 1px solid black; */
   width: 130px;
 }
 
 .container-recommended {
-  border: 1px solid green;
+  border: 1px solid #ff6b01;
+  border-radius: 5px;
   display: flex;
   justify-content: center;
-  width: 700px;
+  margin: auto;
+  margin-bottom: 60px;
+  margin-top: 20px;
+  padding-top: 5px;
+  text-align: center;
+  width: 50vh;
+}
+
+.prev-next-btn {
+  background-color: #ff6b01;
+  border-radius: 5px;
+  color: white;
+  font-weight: 500;
 }

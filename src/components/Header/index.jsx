@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import searchIcon from '../../images/searchIcon.svg';
 import profileIcon from '../../images/profileIcon.svg';
 import SearchBar from '../SearchBar';
+import './style.css';
 
 export default function Header({ pageName, search }) {
   const history = useHistory();
@@ -13,10 +14,10 @@ export default function Header({ pageName, search }) {
   };
 
   return (
-    <header>
+    <header className="container-header">
       <div>
-        <div>
-          <h1 data-testid="page-title">{ pageName }</h1>
+        <h1 data-testid="page-title" className="page-name">{ pageName }</h1>
+        <div className="input-button">
           {
             search
           && (
@@ -25,6 +26,7 @@ export default function Header({ pageName, search }) {
               onClick={
                 () => setShowSearch((prevState) => !prevState)
               }
+              className="header-button"
             >
               <img
                 src={ searchIcon }
@@ -33,15 +35,20 @@ export default function Header({ pageName, search }) {
               />
             </button>)
           }
-          <button type="button" onClick={ redirectProfile }>
-            <img src={ profileIcon } data-testid="profile-top-btn" alt="Imagem perfil" />
+          <button type="button" onClick={ redirectProfile } className="header-button">
+            <img
+              src={ profileIcon }
+              data-testid="profile-top-btn"
+              alt="Imagem perfil"
+            />
           </button>
-        </div>
 
-        {
-          showSearch && <SearchBar />
-        }
+        </div>
       </div>
+
+      {
+        showSearch && <SearchBar />
+      }
     </header>
   );
 }

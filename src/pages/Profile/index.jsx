@@ -26,31 +26,33 @@ export default function Profile() {
   return (
     <div>
       <Header pageName="Profile" search={ false } />
-      <p data-testid="profile-email">{userVerify()}</p>
-      <button
-        data-testid="profile-done-btn"
-        type="button"
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Done Recipes
+      <div className="user">
+        <p data-testid="profile-email" className="email">{userVerify()}</p>
+        <button
+          data-testid="profile-done-btn"
+          type="button"
+          onClick={ () => history.push('/done-recipes') }
+        >
+          Done Recipes
 
-      </button>
-      <button
-        data-testid="profile-favorite-btn"
-        type="button"
-        onClick={ () => history.push('/favorite-recipes') }
-      >
-        Favorite Recipes
+        </button>
+        <button
+          data-testid="profile-favorite-btn"
+          type="button"
+          onClick={ () => history.push('/favorite-recipes') }
+        >
+          Favorite Recipes
 
-      </button>
-      <button
-        data-testid="profile-logout-btn"
-        type="button"
-        onClick={ handleLogout }
-      >
-        Logout
+        </button>
+        <button
+          data-testid="profile-logout-btn"
+          type="button"
+          onClick={ handleLogout }
+        >
+          Logout
 
-      </button>
+        </button>
+      </div>
       <Footer />
     </div>
   );

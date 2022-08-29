@@ -1,3 +1,28 @@
 .container-radio {
   display: flex;
+  justify-content: space-around;
+  margin: 5px;
+}
+
+.search-input {
+  background-color: white;
+  border-radius: 5px;
+  font-size: 20px;
+  height: 25px;
+  margin-bottom: 9px;
+  width: 50vh;
+}
+
+.search-btn {
+  background-color: #7d8600;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 9px;
+  padding: 3px 50px;
+}
+
+.radio {
+  margin: 5px;
 }

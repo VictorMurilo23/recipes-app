@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import context from '../../Context/loginContext';
-
+import './style.css';
 import getRecipes, { getRecipesDrinks } from '../../service/serviceApi';
 
 export default function SearchBar() {
@@ -38,8 +38,9 @@ export default function SearchBar() {
   };
 
   return (
-    <div>
+    <div className="container-search">
       <input
+        className="search-input"
         data-testid="search-input"
         value={ searchValue }
         onChange={ ({ target: { value } }) => setSearchValue(value) }
@@ -48,6 +49,7 @@ export default function SearchBar() {
         type="button"
         data-testid="exec-search-btn"
         onClick={ () => handleSubmit() }
+        className="search-btn"
       >
         Search
       </button>
@@ -55,6 +57,7 @@ export default function SearchBar() {
         <label htmlFor="ingredient">
           <input
             type="radio"
+            className="radio"
             name="searchFilter"
             id="ingredient"
             data-testid="ingredient-search-radio"
@@ -65,6 +68,7 @@ export default function SearchBar() {
         <label htmlFor="name">
           <input
             type="radio"
+            className="radio"
             name="searchFilter"
             id="name"
             data-testid="name-search-radio"
@@ -75,6 +79,7 @@ export default function SearchBar() {
         <label htmlFor="firstLetter">
           <input
             type="radio"
+            className="radio"
             id="firstLetter"
             name="searchFilter"
             data-testid="first-letter-search-radio"

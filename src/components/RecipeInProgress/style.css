@@ -4,6 +4,16 @@
   display: flex;
 }
 
+.checked-progress {
+  accent-color: #7d8600;
+  height: 25px;
+  width: 25px;
+}
+
+.checked-progress:checked {
+  background-color: #7d8600;
+}
+
 .label-ingredient {
   cursor: default;
   display: flex;
@@ -16,6 +26,22 @@
 }
 
 .finishedRecipes {
+  background-color: #ff6b01;
+  border-radius: 5px;
   bottom: 0;
+  color: white;
+  font-weight: 700;
+  padding: 8px 14px;
   position: fixed;
+}
+
+.finishedRecipes:disabled {
+  background-color: #ff6b0165;
+  color: rgba(255, 255, 255, 0.315);
+}
+
+.buttonsContainer {
+  align-self: flex-end;
+  display: flex;
+  margin-right: 10px;
 }

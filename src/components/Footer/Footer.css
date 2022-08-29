@@ -1,4 +1,19 @@
 .footer {
   bottom: 0;
   position: fixed;
+  width: 100%;
+}
+
+.container-footer-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 8px;
+}
+
+.footer-buttons {
+  background-color: #7d8600;
+  border-radius: 5px;
+  box-shadow: 10px 10px 20px 4px;
+  opacity: 0.8;
+  padding: 5px;
 }

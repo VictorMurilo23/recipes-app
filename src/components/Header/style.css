@@ -1,0 +1,20 @@
+.container-header {
+  background-color: #ff6b01;
+  box-shadow: inset -1px -6px 10px 0 rgb(75 3 3 / 58%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  width: auto;
+}
+
+.input-button {
+  align-content: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin: 13px;
+}
+
+.header-button {
+  background-color: #ff6b01;
+}
