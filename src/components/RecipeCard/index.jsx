@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
+import './style.css';
 
 export default function RecipeCard({ recipe, index }) {
   const history = useHistory();
@@ -18,8 +19,10 @@ export default function RecipeCard({ recipe, index }) {
       onClick={ redirect }
       aria-hidden="true"
       data-testid={ `${index}-recipe-card` }
+      className="container-recipe"
     >
       <img
+        className="image-foods"
         src={ image }
         alt="Imagem receita"
         data-testid={ `${index}-card-img` }

@@ -44,6 +44,7 @@ export default function Recommendations({ typePage }) {
         name="prev"
         type="button"
         onClick={ () => updateIndexCarousel(false) }
+        className="prev-next-btn"
       >
         Prev
       </button>
@@ -63,6 +64,7 @@ export default function Recommendations({ typePage }) {
         name="next"
         type="button"
         onClick={ () => updateIndexCarousel(true) }
+        className="prev-next-btn"
       >
         Next
       </button>

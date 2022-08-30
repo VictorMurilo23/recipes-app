@@ -1,11 +1,56 @@
 .start-recipe-btn {
+  background-color: #7d8600;
+  border-radius: 5px;
   bottom: 0;
+  color: white;
+  font-weight: 600;
   margin: 5px;
   padding: 15px;
   position: fixed;
 }
 
 .handle-btn {
+  background-color: #7d8600;
+  border-radius: 5px;
   margin: 5px;
   padding: 7px;
+}
+
+.image-recipe-detail {
+  border-radius: 5px;
+  height: 50vh;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.video-recipe {
+  border-radius: 5px;
+  display: flex;
+  margin: auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.container-info {
+  background-color: #ffc786;
+  border: 1px solid #ff6b018f;
+  border-radius: 5px;
+  color: #af4900;
+  margin-top: 11px;
+  width: 50vh;
+}
+
+.container-recipe-info {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.btn-recipe-details {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.span-copy {
+  text-align: end;
 }

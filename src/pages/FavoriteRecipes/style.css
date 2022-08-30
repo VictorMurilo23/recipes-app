@@ -1,0 +1,38 @@
+.favorite-recipe {
+  align-items: center;
+  background-color: #ffc786;
+  border: 1px solid #ff6b018f;
+  border-radius: 5px;
+  box-shadow: inset 0 -1px 8px 0 rgba(197, 145, 85, 0.849);
+  color: #d42926;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 250px;
+  justify-content: start;
+  margin: 10px;
+  width: 250px;
+}
+
+.container-favorites {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.favorite-buttons {
+  background-color: #7d8600;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: 800;
+  height: 50px;
+  margin: 5px;
+  width: 50px;
+}
+
+.container-buttons {
+  align-items: center;
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 10px;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
+import './style.css';
 
 export default function Profile() {
   function userVerify() {
@@ -26,31 +27,38 @@ export default function Profile() {
   return (
     <div>
       <Header pageName="Profile" search={ false } />
-      <p data-testid="profile-email">{userVerify()}</p>
-      <button
-        data-testid="profile-done-btn"
-        type="button"
-        onClick={ () => history.push('/done-recipes') }
-      >
-        Done Recipes
+      <span className="container-email">
+        <p data-testid="profile-email" className="email">{userVerify()}</p>
+      </span>
+      <div className="user">
+        <button
+          data-testid="profile-done-btn"
+          type="button"
+          onClick={ () => history.push('/done-recipes') }
+          className="profile-btn"
+        >
+          Done Recipes
 
-      </button>
-      <button
-        data-testid="profile-favorite-btn"
-        type="button"
-        onClick={ () => history.push('/favorite-recipes') }
-      >
-        Favorite Recipes
+        </button>
+        <button
+          data-testid="profile-favorite-btn"
+          type="button"
+          onClick={ () => history.push('/favorite-recipes') }
+          className="profile-btn"
+        >
+          Favorite Recipes
 
-      </button>
-      <button
-        data-testid="profile-logout-btn"
-        type="button"
-        onClick={ handleLogout }
-      >
-        Logout
+        </button>
+        <button
+          data-testid="profile-logout-btn"
+          type="button"
+          onClick={ handleLogout }
+          className="profile-btn"
+        >
+          Logout
 
-      </button>
+        </button>
+      </div>
       <Footer />
     </div>
   );

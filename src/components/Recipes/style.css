@@ -1,0 +1,8 @@
+.container-category-btn {
+  align-items: center;
+
+  /* border: 1px solid blue; */
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+}

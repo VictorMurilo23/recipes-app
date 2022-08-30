@@ -7,6 +7,7 @@ import {
 } from '../../service/serviceApi';
 import RecipeCard from '../RecipeCard';
 import CategoryBtn from '../CategoryBtn';
+import './style.css';
 
 export default function Recipes({ pageName }) {
   const [origalRecipes, setOrigalRecipes] = useState([]);
@@ -46,7 +47,7 @@ export default function Recipes({ pageName }) {
     .filter((_recipe, index) => index < five);
   return (
     <div>
-      <div>
+      <div className="container-category-btn">
         {
           categoriesSet.map((category) => (<CategoryBtn
             getCategoryRecipes={ getCategoryRecipes }
@@ -65,7 +66,7 @@ export default function Recipes({ pageName }) {
         />
       </div>
 
-      <div>
+      <div className="container-recipes">
         {
           twelveRecipes
             .map((recipe, index) => (<RecipeCard

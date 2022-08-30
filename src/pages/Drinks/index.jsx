@@ -14,17 +14,27 @@ export default function Drinks() {
   const MagicNum = 12;
 
   const recipeDataMap = () => (
-    recipeData.filter((recipe, i) => i < MagicNum)
-      .map(({ strDrink, strDrinkThumb }, index) => (
-        <div key={ index } data-testid={ `${index}-recipe-card` }>
-          <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
-          <img
-            src={ strDrinkThumb }
-            data-testid={ `${index}-card-img` }
-            alt="receita"
-          />
-        </div>
-      )));
+    <div className='className="container-recipes"'>
+      {
+        recipeData.filter((recipe, i) => i < MagicNum)
+          .map(({ strDrink, strDrinkThumb }, index) => (
+            <div
+              key={ index }
+              className="container-recipe"
+              data-testid={ `${index}-recipe-card` }
+            >
+              <img
+                src={ strDrinkThumb }
+                className="image-foods"
+                data-testid={ `${index}-card-img` }
+                alt="receita"
+              />
+              <p data-testid={ `${index}-card-name` }>{ strDrink }</p>
+            </div>
+          ))
+      }
+    </div>
+  );
 
   const validadeObj = recipeData ? Object.values(recipeData) : [];
 

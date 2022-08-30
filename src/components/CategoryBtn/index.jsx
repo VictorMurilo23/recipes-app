@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import './style.css';
 
 export default function CategoryBtn({
   category, getCategoryRecipes, showAllRecipes, setSelectedCategory, selectedCategory,
@@ -18,6 +19,7 @@ export default function CategoryBtn({
       type="button"
       onClick={ handleClick }
       data-testid={ `${category}-category-filter` }
+      className="category-btn"
     >
       {category}
     </button>

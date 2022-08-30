@@ -98,40 +98,54 @@ export default function RecipeDetails({ data, typePage }) {
   }, [id]);
 
   return (
-    <div>
-      <h2 data-testid="recipe-title">{title}</h2>
-      <img
-        src={ imgUrl }
-        alt={ title }
-        data-testid="recipe-photo"
-      />
-      <p data-testid="recipe-category">{categoryText}</p>
-      <p data-testid="instructions">{instruction}</p>
+    <div className="container-recipe-detail">
+      <div className="container-recipe-info">
+        <h2 data-testid="recipe-title" className="recipe-title">{title}</h2>
+        <p data-testid="recipe-category" className="category-recipe">{categoryText}</p>
+        <img
+          src={ imgUrl }
+          alt={ title }
+          data-testid="recipe-photo"
+          className="image-recipe-detail"
+        />
+        <h3>Ingredients</h3>
+        <div className="container-info">
+          { ingredientsArray.map((_elem, index) => (
+            <p
+              key={ index }
+              data-testid={ `${index}-ingredient-name-and-measure` }
+            >
+              {' '}
+              -
+              {' '}
+              {data[ingredientsArray[index]]}
+              {' '}
+              -
+              {' '}
+              {data[measureArray[index]]}
+            </p>
+          ))}
+        </div>
+        <h3>Instructions</h3>
+        <div className="container-info">
+          <p data-testid="instructions">{instruction}</p>
+        </div>
+      </div>
       { typePage === 'foods'
       && <iframe
         data-testid="video"
-        width="560"
-        height="315"
+        // width="350"
+        // height="200"
         src={ `https://www.youtube.com/embed/${endPointVideo}` }
         title="YouTube video player"
         frameBorder="0"
         allow="accelerometer;
       autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
+        className="video-recipe"
       />}
       <div>
-        { ingredientsArray.map((_elem, index) => (
-          <p
-            key={ index }
-            data-testid={ `${index}-ingredient-name-and-measure` }
-          >
-            {data[ingredientsArray[index]]}
-            {data[measureArray[index]]}
-          </p>
-        ))}
-      </div>
-      <div>
-        <div>
+        <div className="btn-recipe-details">
           <button
             className="handle-btn"
             type="button"
@@ -152,9 +166,11 @@ export default function RecipeDetails({ data, typePage }) {
               : <img src={ whiteHeartIcon } alt="no favorite" /> }
           </button>
         </div>
-        {
-          validadeShare && <span>Link copied!</span>
-        }
+        <div className="span-copy">
+          {
+            validadeShare && <span>Link copied!</span>
+          }
+        </div>
       </div>
       <Recommendations typePage={ typePage } />
       <button

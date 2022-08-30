@@ -5,6 +5,7 @@ import Header from '../../components/Header';
 import shareIcon from '../../images/shareIcon.svg';
 import drinkIcon from '../../images/drinkIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
+import './style.css';
 
 export default function DoneRecipes() {
   const [validateShare, setValidateShare] = useState(false);
@@ -53,41 +54,46 @@ export default function DoneRecipes() {
   return (
     <div>
       <Header pageName="Done Recipes" search={ false } />
-      <button
-        type="button"
-        onClick={ handleFilter }
-        data-testid="filter-by-drink-btn"
-        name="drink"
-      >
-        <img
-          src={ drinkIcon }
-          alt="Ícone Drink"
-        />
-      </button>
-      <button
-        type="button"
-        onClick={ handleFilter }
-        data-testid="filter-by-food-btn"
-        name="food"
-      >
-        <img src={ mealIcon } alt="Ícone Food" />
-      </button>
-      <button
-        type="button"
-        onClick={ handleFilter }
-        data-testid="filter-by-all-btn"
-        name="all"
-      >
-        ALL
-      </button>
-      <div>
+      <div className="container-buttons">
+        <button
+          type="button"
+          onClick={ handleFilter }
+          data-testid="filter-by-drink-btn"
+          name="drink"
+          className="favorite-buttons"
+        >
+          <img
+            src={ drinkIcon }
+            alt="Ícone Drink"
+          />
+        </button>
+        <button
+          type="button"
+          onClick={ handleFilter }
+          data-testid="filter-by-food-btn"
+          name="food"
+          className="favorite-buttons"
+        >
+          <img src={ mealIcon } alt="Ícone Food" />
+        </button>
+        <button
+          type="button"
+          onClick={ handleFilter }
+          data-testid="filter-by-all-btn"
+          name="all"
+          className="favorite-buttons"
+        >
+          ALL
+        </button>
+      </div>
+      <div className="container-favorites">
         {doneRecipes.map(
           (
             { name, category, nationality, image, id, alcoholicOrNot, type, doneDate,
               tags },
             index,
           ) => (
-            <div key={ index }>
+            <div key={ index } className="done-recipe">
               <p
                 data-testid={ `${index}-horizontal-name` }
                 aria-hidden="true"
@@ -105,12 +111,21 @@ export default function DoneRecipes() {
               <p data-testid={ `${index}-horizontal-top-text` }>
                 {`${nationality} - ${category} ${alcoholicOrNot}`}
               </p>
+              <div>
+                { tags.length > 0 && tags.map((element) => (
+                  <p
+                    data-testid={ `${index}-${element}-horizontal-tag` }
+                    key={ element }
+                  >
+                    {element}
+                  </p>))}
+              </div>
               <button type="button" onClick={ () => handleRedirect(id, type) }>
                 <img
                   src={ image }
                   alt="comidas-favoritas"
                   data-testid={ `${index}-horizontal-image` }
-                  style={ { width: '100px' } }
+                  className="image-foods"
                 />
               </button>
               <div>
@@ -126,15 +141,6 @@ export default function DoneRecipes() {
                   />
                 </button>
                 {validateShare && <span>Link copied!</span>}
-                <div>
-                  { tags.length > 0 && tags.map((element) => (
-                    <p
-                      data-testid={ `${index}-${element}-horizontal-tag` }
-                      key={ element }
-                    >
-                      {element}
-                    </p>))}
-                </div>
               </div>
             </div>
           ),

@@ -1,0 +1,15 @@
+.done-recipe {
+  align-items: center;
+  background-color: #ffc786;
+  border: 1px solid #ff6b018f;
+  border-radius: 5px;
+  box-shadow: inset 0 -1px 8px 0 rgba(197, 145, 85, 0.849);
+  color: #d42926;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 350px;
+  justify-content: center;
+  margin: 10px;
+  width: 250px;
+}
