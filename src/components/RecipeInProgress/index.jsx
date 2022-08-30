@@ -75,7 +75,7 @@ export default function RecipeInProgress({ data, typePage }) {
       },
     }));
 
-    const doneRecipes = localStorage.getItem('doneRecipes') || [];
+    const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes')) || [];
     const tags = data.strTags === null ? [] : data.strTags.split(',');
     const today = new Date().toLocaleDateString();
     localStorage.setItem('doneRecipes', JSON.stringify([...doneRecipes, {

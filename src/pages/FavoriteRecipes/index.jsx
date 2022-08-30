@@ -6,6 +6,7 @@ import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import shareIcon from '../../images/shareIcon.svg';
 import drinkIcon from '../../images/drinkIcon.svg';
 import mealIcon from '../../images/mealIcon.svg';
+import './style.css';
 
 export default function FavoriteRecipes() {
   const history = useHistory();
@@ -61,40 +62,45 @@ export default function FavoriteRecipes() {
   return (
     <div>
       <Header pageName="Favorite Recipes" search={ false } />
-      <button
-        type="button"
-        onClick={ handleFilter }
-        data-testid="filter-by-drink-btn"
-        name="drink"
-      >
-        <img
-          src={ drinkIcon }
-          alt="Ícone Drink"
-        />
-      </button>
-      <button
-        type="button"
-        onClick={ handleFilter }
-        data-testid="filter-by-food-btn"
-        name="food"
-      >
-        <img src={ mealIcon } alt="Ícone Food" />
-      </button>
-      <button
-        type="button"
-        onClick={ handleFilter }
-        data-testid="filter-by-all-btn"
-        name="all"
-      >
-        ALL
-      </button>
-      <div>
+      <div className="container-buttons">
+        <button
+          type="button"
+          onClick={ handleFilter }
+          data-testid="filter-by-drink-btn"
+          name="drink"
+          className="favorite-buttons"
+        >
+          <img
+            src={ drinkIcon }
+            alt="Ícone Drink"
+          />
+        </button>
+        <button
+          type="button"
+          onClick={ handleFilter }
+          data-testid="filter-by-food-btn"
+          name="food"
+          className="favorite-buttons"
+        >
+          <img src={ mealIcon } alt="Ícone Food" />
+        </button>
+        <button
+          type="button"
+          onClick={ handleFilter }
+          data-testid="filter-by-all-btn"
+          name="all"
+          className="favorite-buttons"
+        >
+          ALL
+        </button>
+      </div>
+      <div className="container-favorites">
         {favRecipes.map(
           (
             { name, category, nationality, image, id, alcoholicOrNot, type },
             index,
           ) => (
-            <div key={ index }>
+            <div key={ index } className="favorite-recipe">
               <p
                 data-testid={ `${index}-horizontal-name` }
                 aria-hidden="true"
@@ -110,7 +116,7 @@ export default function FavoriteRecipes() {
                   src={ image }
                   alt="comidas-favoritas"
                   data-testid={ `${index}-horizontal-image` }
-                  style={ { width: '100px' } }
+                  className="image-foods"
                 />
               </button>
               <div>

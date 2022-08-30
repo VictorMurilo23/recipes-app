@@ -1,7 +1,25 @@
 .user {
-
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 70vh;
+  justify-content: center;
 }
 
 .email {
-    
+  font-size: 20px;
+  font-weight: 600;
+  margin-top: 15px;
+  text-align: center;
+}
+
+.profile-btn {
+  background-color: #7d8600;
+  border-radius: 5px;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  margin: 10px;
+  padding: 20px;
+  width: 70vw;
 }
