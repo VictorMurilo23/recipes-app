@@ -11,7 +11,17 @@ import abcRecipe from "./helpers/mockAbc";
 import categories from './helpers/categoriesMock'
 import copy from 'clipboard-copy'
 
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+});
+
 describe('Testes do MainRecipes', () => {
+  jest.spyOn(navigator.clipboard, "writeText");
+  beforeAll(() => {
+    copy();
+  });
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation((url) => {
       if (url.includes('https://www.themealdb.com/api/json/v1/1/search.php?s=')) {

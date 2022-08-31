@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { findByText, screen, waitFor } from "@testing-library/react"
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
 import userEvent from "@testing-library/user-event";
@@ -11,32 +11,18 @@ import abcRecipe from "./helpers/mockAbc";
 import categories from './helpers/categoriesMock'
 import copy from 'clipboard-copy'
 
-function storageMock() {
-  let storage = {};
-
-  return {
-    setItem: function(key, value) {
-      storage[key] = value || '';
-    },
-    getItem: function(key) {
-      return key in storage ? storage[key] : null;
-    },
-    removeItem: function(key) {
-      delete storage[key];
-    },
-    get length() {
-      return Object.keys(storage).length;
-    },
-    key: function(i) {
-      const keys = Object.keys(storage);
-      return keys[i] || null;
-    }
-  };
-}
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+});
 
 describe('Testes do MainRecipes', () => {
+  jest.spyOn(navigator.clipboard, "writeText");
+  beforeAll(() => {
+    copy();
+  });
   beforeEach(() => {
-    window.localStorage = storageMock();
     jest.spyOn(global, 'fetch').mockImplementation((url) => {
       if (url.includes('https://www.themealdb.com/api/json/v1/1/search.php?s=')) {
         return ({
@@ -68,16 +54,6 @@ describe('Testes do MainRecipes', () => {
         })
       }
     })
-
-    // let localStore = {};
-
-    // jest.spyOn(window.localStorage, 'getItem').and.callFake((key) =>
-    //   key in localStore ? localStore[key] : null
-    // );
-    // jest.spyOn(window.localStorage, 'setItem').and.callFake(
-    //   (key, value) => (localStore[key] = value + '')
-    // );
-    // jest.spyOn(window.localStorage, 'clear').and.callFake(() => (localStore = {}));
   })
   it('ABC IN PROGRESS', async () => {
     
@@ -87,6 +63,7 @@ describe('Testes do MainRecipes', () => {
     expect(history.location.pathname).toBe('/drinks')
     const recipeCard = await screen.findByTestId('2-recipe-card')
     userEvent.click(recipeCard);
+  
     const btnStart = await screen.findByTestId("start-recipe-btn")
     userEvent.click(btnStart);
     const checkbox = await screen.findAllByRole('checkbox');
@@ -94,10 +71,16 @@ describe('Testes do MainRecipes', () => {
       const check = screen.getByTestId(`${index}-ingredient-step`)
       userEvent.click(check);
     }
+
+    const btnShare = await screen.findByTestId('share-btn');
+    userEvent.click(btnShare);
+    expect(navigator.clipboard.writeText).toHaveBeenCalled()
+    const teste = screen.getByText(/link copied/i)
+    expect(teste).toBeDefined();
+
     const finishRecipe = screen.getByTestId('finish-recipe-btn')
     userEvent.click(finishRecipe)
   });
-
   it('TAMIYA IN PROGRESS', async () => {
     const { history } =  renderWithRouter(<App />)
     history.push('/foods')
@@ -109,22 +92,11 @@ describe('Testes do MainRecipes', () => {
     const btnFavorite = await screen.findByTestId('favorite-btn')
     userEvent.click(btnFavorite)
     userEvent.click(btnFavorite)
-    // const mockCopy = jest.spyOn(copy, 'link copiado')
-    // expect(mockCopy).toBeCalled()
-    // window.document.execCommand = jest.fn();
-    // const btnShare = await screen.findByTestId('share-btn');
-    
-    // userEvent.click(btnShare);
-    // expect(window.document.execCommand).toHaveBeenCalledWith("copy");
-    // expect(screen.getByText(/Link copied!/i)).toBeInTheDocument()
-
 
     const btnStart = await screen.findByTestId("start-recipe-btn")
     userEvent.click(btnStart);
 
     const btnFavoriteInProgress = await screen.findByTestId('favorite-btn')
-    // const teste = screen.getByText('dahiuwfgia')
-    // expect(teste).toBeDefined();
     
     userEvent.click(btnFavoriteInProgress)
     userEvent.click(btnFavoriteInProgress)
@@ -137,8 +109,17 @@ describe('Testes do MainRecipes', () => {
     const check = screen.getByTestId(`0-ingredient-step`)
     userEvent.click(check)
     userEvent.click(check)
+    const btnShare = await screen.findByTestId('share-btn');
+    userEvent.click(btnShare);
+    expect(navigator.clipboard.writeText).toHaveBeenCalled()
+    // expect(navigator.clipboard.writeText).toHaveBeenCalledWith('')
+    const teste = screen.getByText(/link copied/i)
+    expect(teste).toBeDefined()
 
     const finishRecipe = screen.getByTestId('finish-recipe-btn')
     userEvent.click(finishRecipe)
+
+    // const btnShare = await screen.findByTestId('dawidawiodn');
+    
   })
 })

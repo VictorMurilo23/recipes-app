@@ -5,45 +5,24 @@ import userEvent from "@testing-library/user-event";
 import drinksCategories from "./helpers/drinksCategories";
 import drinks from "./helpers/drinksRecipesMock";
 import tamiya from "./helpers/mockTamiya";
-import doneRecipes from "./helpers/doneRecipesMock";
 import beef from "./helpers/beefCategoryMock";
 import recipes from './helpers/recipesMock';
 import abcRecipe from "./helpers/mockAbc";
 import categories from './helpers/categoriesMock'
 import copy from 'clipboard-copy'
 
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+});
+
 describe('Testes do DoneRecipes', () => {
-
-  // jest.spyOn(Storage.prototype, 'setItem');
-  // Storage.prototype.setItem = jest.fn();
-
-  // jest.spyOn(Storage.prototype, 'getItem');
-  // Storage.prototype.getItem = jest.fn(() => ({JSON: { parse: () => doneRecipes}}));
-
-  // function storageMock() {
-  //   let storage = {};
-  
-  //   return {
-  //     setItem: function(key, value) {
-  //       storage[key] = value || '';
-  //     },
-  //     getItem: function(key) {
-  //       return key in storage ? storage[key] : null;
-  //     },
-  //     removeItem: function(key) {
-  //       delete storage[key];
-  //     },
-  //     get length() {
-  //       return Object.keys(storage).length;
-  //     },
-  //     key: function(i) {
-  //       const keys = Object.keys(storage);
-  //       return keys[i] || null;
-  //     }
-  //   };
-  // }
+  jest.spyOn(navigator.clipboard, "writeText");
+  beforeAll(() => {
+    copy();
+  });
   beforeEach(() => {
-    // window.localStorage = storageMock();
     jest.spyOn(global, 'fetch').mockImplementation((url) => {
       if (url.includes('https://www.themealdb.com/api/json/v1/1/search.php?s=')) {
         return ({
@@ -77,18 +56,14 @@ describe('Testes do DoneRecipes', () => {
     })
   })
   it('FILTERS BUTTONS', async () => {
-    
     const { history } =  renderWithRouter(<App />)
     history.push('/drinks')
-
     expect(history.location.pathname).toBe('/drinks')
 
     const recipeCard = await screen.findByTestId('2-recipe-card')
-
     userEvent.click(recipeCard);
 
     const btnStart = await screen.findByTestId("start-recipe-btn")
-
     userEvent.click(btnStart);
 
     const checkbox = await screen.findAllByRole('checkbox');
@@ -99,17 +74,56 @@ describe('Testes do DoneRecipes', () => {
     const finishRecipe = screen.getByTestId('finish-recipe-btn')
     userEvent.click(finishRecipe)
     expect(history.location.pathname).toBe('/done-recipes')
-    const filterDrink = await screen.findByTestId('filter-by-drink-btn')
-    userEvent.click(filterDrink);
 
-    const filterFood = await screen.findByTestId('filter-by-food-btn')
+    const recipeZeroShare = await screen.findByTestId(`0-horizontal-share-btn`) // alterar index
+    userEvent.click(recipeZeroShare);
+
+  });
+
+  it('Comida', async () => {
+    const { history } =  renderWithRouter(<App />)
+    history.push('/foods')
+    expect(history.location.pathname).toBe('/foods')
+
+    const recipeCard = await screen.findByTestId('3-recipe-card');
+    userEvent.click(recipeCard);
+
+    const btnStart = await screen.findByTestId("start-recipe-btn")
+    userEvent.click(btnStart);
+    
+    const checkbox = await screen.findAllByRole('checkbox');
+    for(let index = 0; index < checkbox.length; index += 1) {
+      const check = screen.getByTestId(`${index}-ingredient-step`)
+      userEvent.click(check);
+    }
+
+    const finishRecipe = screen.getByTestId('finish-recipe-btn')
+    userEvent.click(finishRecipe)
+
+    const filterDrink = await screen.findByAltText('Ícone Drink')
+    userEvent.click(filterDrink);
+    const filterFood = await screen.findByAltText('Ícone Food')
     userEvent.click(filterFood);
 
     const filterAll = await screen.findByTestId('filter-by-all-btn')
     userEvent.click(filterAll);
+    const recipeOneShare = await screen.findByTestId(`1-horizontal-share-btn`) // alterar index
+    userEvent.click(recipeOneShare);
 
-    const recipeOne = await screen.findByTestId(`dwahfwa9f`) // alterar index
-    // userEvent.click(recipeOne);
+    const redirect = await screen.findByTestId('0-horizontal-image')
+    userEvent.click(redirect);
+    history.push('/done-recipes')
 
-  });
+    const redirect2 = await screen.findByTestId('1-horizontal-image')
+    userEvent.click(redirect2);
+    history.push('/done-recipes')
+
+    const redirect3 = await screen.findByTestId('1-horizontal-done-date')
+    userEvent.click(redirect3);
+    history.push('/done-recipes')
+
+    const redirect4 = await screen.findByTestId('1-horizontal-name')
+    userEvent.click(redirect4);
+    
+  })
 })
