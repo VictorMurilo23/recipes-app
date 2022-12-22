@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
 import userEvent from "@testing-library/user-event";
@@ -9,9 +9,19 @@ import beef from "./helpers/beefCategoryMock";
 import recipes from './helpers/recipesMock';
 import abcRecipe from "./helpers/mockAbc";
 import categories from './helpers/categoriesMock'
+import copy from 'clipboard-copy'
+
+Object.assign(navigator, {
+  clipboard: {
+    writeText: () => {},
+  },
+});
 
 describe('Testes do MainRecipes', () => {
-
+  jest.spyOn(navigator.clipboard, "writeText");
+  beforeAll(() => {
+    copy();
+  });
   beforeEach(() => {
     jest.spyOn(global, 'fetch').mockImplementation((url) => {
       if (url.includes('https://www.themealdb.com/api/json/v1/1/search.php?s=')) {
@@ -45,20 +55,7 @@ describe('Testes do MainRecipes', () => {
       }
     })
   })
-  it('Verifica se é renderizado as receitas', async () => {
-    const { history } =  renderWithRouter(<App />)
-    history.push('/foods')
-    const { pathname } = history.location;
-    
-    expect(pathname).toBe('/foods')
-
-    const categoryBeef = await screen.findByTestId('Beef-category-filter')
-    userEvent.click(categoryBeef);
-    const teste = await screen.findByTestId('Beef-category-filter')
-    userEvent.click(teste);
-  })
-
-  it('Verifica se você é redirecionado ao clicar em um card de receita', async () => {
+  it('ABC DETALHES', async () => {
     
     const { history } =  renderWithRouter(<App />)
     history.push('/drinks')
@@ -66,15 +63,40 @@ describe('Testes do MainRecipes', () => {
     expect(history.location.pathname).toBe('/drinks')
     const recipeCard = await screen.findByTestId('2-recipe-card')
     userEvent.click(recipeCard);
+    const prevBtn = await screen.findByRole('button', { name: /prev/i })
+    userEvent.click(prevBtn);
+    const nextBtn = await screen.findByRole('button', { name: /next/i })
+    userEvent.click(nextBtn);
+
+    const btnStart = await screen.findByTestId("start-recipe-btn")
+    userEvent.click(btnStart);
   });
 
-  it('TAMIYA', async () => {
+  it('TAMIYA DETALHES', async () => {
     const { history } =  renderWithRouter(<App />)
     history.push('/foods')
     const { pathname } = history.location;
-    
+
     expect(pathname).toBe('/foods')
     const recipeCard = await screen.findByTestId('3-recipe-card');
     userEvent.click(recipeCard);
+    const btnFavorite = await screen.findByTestId('favorite-btn')
+    userEvent.click(btnFavorite)
+    userEvent.click(btnFavorite)
+    // const mockCopy = jest.spyOn(copy, 'link copiado')
+    // expect(mockCopy).toBeCalled()
+    // window.document.execCommand = jest.fn();
+    await waitFor( async () => {
+      const btnShare = await screen.findByTestId('share-btn');
+      console.log(btnShare);
+      userEvent.click(btnShare);
+      expect(screen.getByText(/Link copied!/i)).toBeInTheDocument()
+    })
+    
+    // expect(window.document.execCommand).toHaveBeenCalledWith("copy");
+
+
+    const btnStart = await screen.findByTestId("start-recipe-btn")
+    userEvent.click(btnStart);
   })
 })
