@@ -49,12 +49,12 @@ export default function Recipes({ pageName }) {
     <div>
       <div className="container-category-btn">
         {
-          categoriesSet.map((category) => (<CategoryBtn
+          categoriesSet.map((category, index) => (<CategoryBtn
             getCategoryRecipes={ getCategoryRecipes }
             selectedCategory={ selectedCategory }
             setSelectedCategory={ setSelectedCategory }
             showAllRecipes={ showAllRecipes }
-            key={ category.strCategory }
+            key={ `${category.strCategory}, ${index}` }
             category={ category.strCategory }
           />))
         }

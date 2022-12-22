@@ -112,7 +112,7 @@ export default function RecipeDetails({ data, typePage }) {
         <div className="container-info">
           { ingredientsArray.map((_elem, index) => (
             <p
-              key={ index }
+              key={ `${index} ${Math.random()}` }
               data-testid={ `${index}-ingredient-name-and-measure` }
             >
               {' '}

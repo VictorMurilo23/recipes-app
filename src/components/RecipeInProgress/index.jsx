@@ -144,7 +144,10 @@ export default function RecipeInProgress({ data, typePage }) {
       <h3>Ingredients</h3>
       <div className="container-info">
         { ingredientsArray.map((_elem, index) => (
-          <div key={ data[ingredientsArray[index]] } className="row-ingredient">
+          <div
+            key={ `${data[ingredientsArray[index]]}, ${index}` }
+            className="row-ingredient"
+          >
             <label
               className={ !updateIngredients
                 .some((elem) => elem === data[ingredientsArray[index]])

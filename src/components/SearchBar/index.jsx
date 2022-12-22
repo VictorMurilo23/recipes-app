@@ -35,6 +35,8 @@ export default function SearchBar() {
     if (locationPage === 'drinks') {
       setRecipeData(await getRecipesDrinks(toggleId, searchValue));
     }
+
+    setSearchValue('');
   };
 
   return (

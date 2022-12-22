@@ -10,6 +10,7 @@ import recipes from './helpers/recipesMock';
 import abcRecipe from "./helpers/mockAbc";
 import categories from './helpers/categoriesMock'
 import copy from 'clipboard-copy'
+import requestsMock from "./helpers/requestsMock";
 
 Object.assign(navigator, {
   clipboard: {
@@ -22,39 +23,8 @@ describe('Testes do MainRecipes', () => {
   beforeAll(() => {
     copy();
   });
-  beforeEach(() => {
-    jest.spyOn(global, 'fetch').mockImplementation((url) => {
-      if (url.includes('https://www.themealdb.com/api/json/v1/1/search.php?s=')) {
-        return ({
-          json: async () => recipes,
-        });
-      } else if (url.includes('https://www.themealdb.com/api/json/v1/1/list.php?c=list')) {
-        return ({
-          json: async () => categories,
-        });
-      } else if (url.includes('https://www.themealdb.com/api/json/v1/1/filter.php?c=Beef')) {
-        return ({
-          json: async () => beef,
-        });
-      } else if (url.includes('https://www.themealdb.com/api/json/v1/1/lookup.php?i=53026')) {
-        return ({
-          json: async () => tamiya,
-        });
-      } else if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')) {
-        return ({
-          json: async () => drinks,
-        });
-      } else if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')) {
-        return ({
-          json: async () => drinksCategories,
-        });
-      } else if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=13501')) {
-        return({
-          json: async () => abcRecipe
-        })
-      }
-    })
-  })
+  beforeEach(requestsMock);
+  
   it('ABC IN PROGRESS', async () => {
     
     const { history } =  renderWithRouter(<App />)

@@ -2,18 +2,19 @@ import App from "../App"
 import React from "react"
 import renderWithRouter from "./helpers/renderWithRouter"
 import userEvent from "@testing-library/user-event";
-import { screen } from "@testing-library/react";
-import recipes from './helpers/recipesMock';
-import tamiya from './helpers/mockTamiya';
-import abcRecipe from './helpers/mockAbc';
+import { screen, waitFor } from "@testing-library/react";
+import requestsMock from "./helpers/requestsMock";
 
 jest.spyOn(global, 'alert');
 global.alert.mockImplementation(() => {});
 
-  afterEach(() => jest.clearAllMocks())
+afterEach(() => jest.clearAllMocks())
 
 describe('Testes do Header', () => {
-  it('Verifica se Header renderiza na tela', () => {
+  
+  beforeEach(requestsMock)
+
+  it('Verifica se Header renderiza na tela', async () => {
     const { history } =  renderWithRouter(<App />)
     
     const email = screen.getByTestId('email-input')
@@ -23,6 +24,11 @@ describe('Testes do Header', () => {
     userEvent.type(email, 'test@test.com')
     userEvent.type(password, '1234567')
     userEvent.click(btnSubmit)
+
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
+
     
     const btnProfile = screen.getByRole('button', {
       name: /imagem perfil/i
@@ -50,22 +56,37 @@ describe('Testes do Header', () => {
     userEvent.click(radioName)
     userEvent.click(btnSearchRecipe)
 
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
+
     userEvent.type(inputSearch, 'garlic')
     userEvent.click(radioIngredient)
     userEvent.click(btnSearchRecipe)
 
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
+
     userEvent.type(inputSearch, 'A')
     userEvent.click(radioFirstLetter)
     userEvent.click(btnSearchRecipe)
+
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
     
     userEvent.click(btnProfile)
-
   })
 
-  it('Tela drinks', () => {
+  it('Tela drinks', async () => {
     const { history } =  renderWithRouter(<App />)
 
     history.push('/drinks')
+    
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
 
     expect(history.location.pathname).toBe('/drinks')
 
@@ -89,25 +110,37 @@ describe('Testes do Header', () => {
     userEvent.type(inputSearch, 'Margarita')
     userEvent.click(radioName)
     userEvent.click(btnSearchRecipe)
+  
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
 
     userEvent.type(inputSearch, 'Tequila')
     userEvent.click(radioIngredient)
     userEvent.click(btnSearchRecipe)
 
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    });
+
     userEvent.type(inputSearch, 'M')
     userEvent.click(radioFirstLetter)
     userEvent.click(btnSearchRecipe)
-
-    userEvent.click(btnSearchRecipe);
-  } )
-  it('Rotas foods', () => {
-    global.fetch = jest.fn(async () => ({
-      json: async () => recipes
-    }));
+    
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    });
+  })
+  
+  it('Rotas foods', async () => {
 
     const { history } =  renderWithRouter(<App />)
-
+    
     history.push('/foods')
+
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
 
     const btnSearch = screen.getByRole('button', {
       name: /ícone de pesquisa/i
@@ -120,26 +153,25 @@ describe('Testes do Header', () => {
       name: /name/i
     })
 
-  
-    global.fetch = jest.fn(async () => ({
-      json: async () => tamiya
-    }));
-    
     userEvent.type(inputSearch, 'Tamiya')
     userEvent.click(radioName)
     userEvent.click(btnSearchRecipe)
+
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
     
     expect(history.location.pathname).toBe('/foods')
   })
 
-  it('Rotas drinks', () => {
-    global.fetch = jest.fn(async () => ({
-      json: async () => recipes
-    }));
-
+  it('Rotas drinks', async () => {
     const { history } =  renderWithRouter(<App />)
 
     history.push('/drinks')
+
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
 
     const btnSearch = screen.getByRole('button', {
       name: /ícone de pesquisa/i
@@ -152,32 +184,36 @@ describe('Testes do Header', () => {
       name: /name/i
     })
 
-  
-    global.fetch = jest.fn(async () => ({
-      json: async () => abcRecipe
-    }));
-    
     userEvent.type(inputSearch, 'abc')
     userEvent.click(radioName)
     userEvent.click(btnSearchRecipe)
-    
+
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
+
     expect(history.location.pathname).toBe('/drinks')
   })
 
-  it ('teste', () => {
-    global.fetch = jest.fn(async () => ({
-      json: async () => recipes
-    }));
+  it('teste', async () => {
     const { history } =  renderWithRouter(<App />)
 
     history.push('/foods');
 
-      const btnSearch = screen.getByRole('button', {
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
+
+    const btnSearch = screen.getByRole('button', {
       name: /ícone de pesquisa/i
     })
     userEvent.click(btnSearch)
 
     const btnSearchRecipe = screen.getByTestId('exec-search-btn')
     userEvent.click(btnSearchRecipe);
+
+    await waitFor(async () => {
+      expect(global.fetch).toBeCalled()
+    })
   })
 })
