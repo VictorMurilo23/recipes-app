@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
-import context from '../../Context/loginContext';
+import context from '../../Context/context';
 import './style.css';
 
 export default function Login({ history }) {

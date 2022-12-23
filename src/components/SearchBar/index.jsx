@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import context from '../../Context/loginContext';
+import context from '../../Context/context';
 import './style.css';
 import getRecipes, { getRecipesDrinks } from '../../service/serviceApi';
 

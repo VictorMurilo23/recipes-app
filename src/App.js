@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import Provider from './Context/loginProvider';
+import Provider from './Context/provider';
 import Routes from './Routes/Routes';
 
 function App() {

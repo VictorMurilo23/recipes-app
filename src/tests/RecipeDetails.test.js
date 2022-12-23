@@ -2,13 +2,6 @@ import { screen, waitFor } from "@testing-library/react"
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
 import userEvent from "@testing-library/user-event";
-import drinksCategories from "./helpers/drinksCategories";
-import drinks from "./helpers/drinksRecipesMock";
-import tamiya from "./helpers/mockTamiya";
-import beef from "./helpers/beefCategoryMock";
-import recipes from './helpers/recipesMock';
-import abcRecipe from "./helpers/mockAbc";
-import categories from './helpers/categoriesMock'
 import copy from 'clipboard-copy'
 import requestsMock from "./helpers/requestsMock";
 
