@@ -18,8 +18,10 @@ export default getRecipes;
 
 async function getSearchDrinks(query) {
   try {
+    console.log(`https://www.thecocktaildb.com/api/json/v1/1/${query}`);
     const request = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/${query}`);
     const data = await request.json();
+    // console.log(data.drinks[1]);
     return data.drinks;
   } catch (e) {
     console.log(e);

@@ -3,7 +3,7 @@ import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
 import userEvent from "@testing-library/user-event";
 import copy from 'clipboard-copy'
-import requestsMock from "./helpers/requestsMock";
+import requestsMock from "./mocks/requestsMock";
 
 Object.assign(navigator, {
   clipboard: {

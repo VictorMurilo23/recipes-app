@@ -2,7 +2,7 @@ import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event";
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
-import requestsMock from "./helpers/requestsMock";
+import requestsMock from "./mocks/requestsMock";
 
 describe('Testes do Footer', () => {
   beforeEach(requestsMock);

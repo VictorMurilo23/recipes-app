@@ -11,6 +11,7 @@ import margaritaSeach from "./mockMargarita";
 import tamiya from "./mockTamiya";
 import searchTequila from "./mockTequila";
 import recipes from "./recipesMock";
+import testeRecipe from "./testeRecipeMock";
 
 const requestsMock = () => {
   jest.spyOn(global, 'fetch').mockImplementation((url) => {
@@ -65,6 +66,18 @@ const requestsMock = () => {
     } else if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=M')) {
       return ({
         json: async () => mRecipes
+      })
+    } else if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=xablau')) {
+      return ({
+        json: async () => undefined
+      })
+    } else if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=p')) {
+      return ({
+        json: async () => testeRecipe
+      })
+    } else if (url.includes('https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=12776')) {
+      return ({
+        json: async () => abcRecipe
       })
     }
   })
