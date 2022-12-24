@@ -1,10 +1,9 @@
-import { screen, waitFor, waitForElementToBeRemoved } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import App from "../App";
 import renderWithRouter from "./helpers/renderWithRouter";
 import userEvent from "@testing-library/user-event";
 import copy from 'clipboard-copy'
 import requestsMock from "./helpers/requestsMock";
-import { act } from "react-dom/test-utils";
 
 Object.assign(navigator, {
   clipboard: {
