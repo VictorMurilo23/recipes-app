@@ -13,7 +13,7 @@ body {
   align-items: center;
   background-color: #facf9fe3;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   height: 100vh;
   justify-content: center;
 }
@@ -28,14 +28,13 @@ body {
   color: white;
   font-size: 20px;
   font-weight: 700;
-  padding: 15px 100px;
+  height: 2.5em;
+  padding: 8px;
+  width: 9em;
 }
 
 .button:disabled {
   background-color: #7d860085;
-  color: white;
-  font-weight: 700;
-  padding: 15px 100px;
 }
 
 .container-input {
@@ -47,8 +46,6 @@ body {
 
 .input {
   background: white;
-
-  /* border: 1px solid black; */
   border-radius: 10px;
   color: #ff6b01;
   font-size: 15px;

@@ -19,6 +19,8 @@ export default function DoneRecipesCard({ recipe, index }) {
   const history = useHistory();
   const [validateShare, setValidateShare] = useState(false);
 
+  const twoSeconds = 2000;
+
   const handleCopy = (recipeId, recipeType) => {
     if (recipeType === 'food') {
       copy(`http://localhost:3000/foods/${recipeId}`);
@@ -27,6 +29,10 @@ export default function DoneRecipesCard({ recipe, index }) {
       copy(`http://localhost:3000/drinks/${recipeId}`);
       setValidateShare(true);
     }
+
+    setTimeout(() => {
+      setValidateShare(false);
+    }, twoSeconds);
   };
 
   const handleRedirect = (recipeId, recipeType) => {

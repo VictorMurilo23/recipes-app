@@ -41,9 +41,6 @@ export default function Drinks() {
   return (
     <div>
       <Header pageName="Drinks" />
-
-      {/* {recipeData[0] ? recipeDataMap() : <Recipes pageName="drinks" />} */}
-      {/* {recipeData[0] ? recipeDataMap() : <Recipes pageName="drinks" />} */}
       { validadeObj && validadeObj.length >= 1
         ? recipeDataMap()
         : <Recipes pageName="drinks" />}

@@ -134,11 +134,8 @@ export default function RecipeDetails({ data, typePage }) {
       { typePage === 'foods'
       && <iframe
         data-testid="video"
-        // width="350"
-        // height="200"
         src={ `https://www.youtube.com/embed/${endPointVideo}` }
         title="YouTube video player"
-        frameBorder="0"
         allow="accelerometer;
       autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
