@@ -11,7 +11,7 @@ Object.assign(navigator, {
   },
 });
 
-describe('Testes do MainRecipes', () => {
+describe('Testes do RecipeDetails', () => {
   jest.spyOn(navigator.clipboard, "writeText");
   beforeAll(() => {
     copy();
@@ -49,7 +49,6 @@ describe('Testes do MainRecipes', () => {
     userEvent.click(nextBtn);
     userEvent.click(nextBtn);
     expect(screen.getByText('Kumpir')).toBeVisible()
-    // screen.getByText('dawdgiugawiudgi')
 
     const btnStart = await screen.findByTestId("start-recipe-btn")
     userEvent.click(btnStart);
