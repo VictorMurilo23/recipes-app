@@ -13,7 +13,6 @@ export default function SearchBar() {
   useEffect(() => {
     if (recipeData && recipeData.length === 1) {
       const { idMeal, idDrink } = recipeData[0];
-      // console.log(recipeData);
       history.push(`/${locationPage}/${idMeal || idDrink}`);
     }
     if (recipeData && recipeData.length > 1) {

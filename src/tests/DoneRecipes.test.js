@@ -184,16 +184,5 @@ describe('Testes do DoneRecipes', () => {
     });
     expect(history.location.pathname).toBe('/foods/53026')
     history.push('/done-recipes')
-
-
-    // const redirect3 = await screen.findByTestId('1-horizontal-done-date')
-    // userEvent.click(redirect3);
-
-    // expect(screen.getByText('Loading...')).toBeDefined();
-    // await waitForElementToBeRemoved(() => screen.queryByText(/loading.../i));
-
-    // history.push('/done-recipes')
-
-
   })
 })

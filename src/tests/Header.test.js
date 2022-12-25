@@ -8,8 +8,6 @@ import requestsMock from "./mocks/requestsMock";
 jest.spyOn(global, 'alert');
 global.alert.mockImplementation(() => {});
 
-// afterEach(() => jest.clearAllMocks())
-
 describe('Testes do Header', () => {
   
   beforeEach(requestsMock)
@@ -266,15 +264,12 @@ describe('Testes do Header', () => {
 
     userEvent.type(inputSearch, 'p')
     userEvent.click(radioFirstLetter)
-    // expect(radioName).toBeChecked()
     userEvent.click(btnSearchRecipe)
     await waitFor(async () => {
       expect(global.fetch).toBeCalled()
     })
-    // expect(global.alert).toBeCalled()
     await waitFor(async () => {
     expect(history.location.pathname).toBe('/drinks/12776') 
-      // expect(global.fetch).toBeCalled()
     })
   })
 })
