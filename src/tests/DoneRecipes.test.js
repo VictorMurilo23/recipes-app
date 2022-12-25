@@ -159,8 +159,7 @@ describe('Testes do DoneRecipes', () => {
     
     const finishRecipe = screen.getByTestId('finish-recipe-btn')
     userEvent.click(finishRecipe)
-    
-    // screen.getByText('duagwyidgayidgwyg')
+
     const redirect = await screen.findByTestId('0-horizontal-image')
     userEvent.click(redirect);
     await waitFor(async () => {
