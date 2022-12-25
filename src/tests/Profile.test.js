@@ -5,7 +5,7 @@ import renderWithRouter from "./helpers/renderWithRouter";
 
 
 describe('Teste da pagina profile', () => {
-  it('Verifica o button done recipes', () => {
+  it('Verifica se o button done recipes redireciona pra rota done-recipes', () => {
     const { history } =  renderWithRouter(<App />)
     history.push('/profile');
     const btnDoneRecipes = screen.getByTestId('profile-done-btn');
@@ -14,7 +14,7 @@ describe('Teste da pagina profile', () => {
     expect(pathname).toBe('/done-recipes');
   })
   
-  it('Verifica o button favorite recipes', () => {
+  it('Verifica se o button favorite recipes redireciona pra rota favorite-recipes', () => {
     const { history } =  renderWithRouter(<App />)
     history.push('/profile');
     const btnFavoriteRecipes = screen.getByTestId('profile-favorite-btn');
@@ -23,7 +23,7 @@ describe('Teste da pagina profile', () => {
     expect(pathname).toBe('/favorite-recipes');
   })
   
-  it('Verifica o button logout', () => {
+  it('Verifica se o button logout redireciona pra página de login', () => {
     const { history } =  renderWithRouter(<App />)
     history.push('/profile');
     const btnLogout= screen.getByTestId('profile-logout-btn');
